@@ -1,23 +1,20 @@
-import { AboutPage, HomePage } from "@/pages";
 import { createBrowserRouter } from "react-router";
 import type { RouteObject } from "react-router";
+import { RootLayout } from "@/layouts";
+import { HomePage, AboutPage } from "@/pages";
 
 export const routes: RouteObject[] = [
   {
-    index: true,
-    path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/about",
-    element: <AboutPage />,
-  },
-  {
-    path: "/users",
-    element: <p>Users page</p>,
+    element: <RootLayout />,
     children: [
       {
-        // nested pages goes here
+        index: true,
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
       },
     ],
   },
