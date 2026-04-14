@@ -1,8 +1,4 @@
-interface ButtonProps {
-  onClick?: () => void;
-  label: string;
-  variant?: "primary" | "secondary" | "outlined";
-}
+import type { ButtonProps } from "@/types";
 
 const Button = ({ label, onClick, variant = "primary" }: ButtonProps) => {
   return (

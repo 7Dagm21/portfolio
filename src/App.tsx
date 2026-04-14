@@ -1,12 +1,14 @@
-import { Button } from "./components";
+import { Button } from "@/components";
+import HomePage from "@/pages/HomePage";
 
-function App() {
+const App = () => {
   return (
     <div>
       <p className="text-2xl text-blue-400">Hello world</p>
       <Button label="Button" />
+      <HomePage />
     </div>
   );
-}
+};
 
 export default App;
