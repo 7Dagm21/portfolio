@@ -1,4 +1,8 @@
-import type { ButtonProps } from "@/types";
+export interface ButtonProps {
+  onClick?: () => void;
+  label: string;
+  variant?: "primary" | "secondary" | "outlined";
+}
 
 const Button = ({ label, onClick, variant = "primary" }: ButtonProps) => {
   return (
