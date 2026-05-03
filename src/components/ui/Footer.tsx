@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { useTheme } from "@/context/ThemeContext";
 
 const quickLinks = [
   { label: "Home", to: "/" },
@@ -40,29 +41,53 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const { isDark } = useTheme();
+
   return (
-    <footer className="relative mt-16 bg-[#0A0A0A]">
+    <footer
+      className={`relative mt-16 ${isDark ? "bg-[#0A0A0A]" : "bg-white"}`}
+    >
       <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-1/2">
-        <div className="mx-auto h-px max-w-7xl bg-gradient-to-r from-transparent via-blue-300/30 to-transparent" />
-        <div className="mx-auto mt-0 h-2 max-w-6xl bg-gradient-to-r from-transparent via-blue-500/10 to-transparent blur-sm" />
+        <div
+          className={`mx-auto h-px max-w-400 bg-linear-to-r from-transparent ${
+            isDark ? "via-blue-300/30" : "via-slate-300/60"
+          } to-transparent`}
+        />
+        <div
+          className={`mx-auto mt-0 h-2 max-w-350 bg-linear-to-r from-transparent ${
+            isDark ? "via-blue-500/10" : "via-slate-300/20"
+          } to-transparent blur-sm`}
+        />
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-3 lg:px-8">
+      <div className="mx-auto grid w-full max-w-400 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-3 lg:px-10">
         <div>
           <Link
             to="/"
-            className="text-lg font-semibold text-white transition duration-300 hover:text-blue-300"
+            className={`text-lg font-semibold transition duration-300 ${
+              isDark
+                ? "text-white hover:text-blue-300"
+                : "text-slate-900 hover:text-blue-600"
+            }`}
           >
             User
           </Link>
-          <p className="mt-4 max-w-sm text-sm leading-6 text-gray-400">
+          <p
+            className={`mt-4 max-w-sm text-sm leading-6 ${isDark ? "text-gray-400" : "text-slate-600"}`}
+          >
             Personal portfolio — projects, skills, and ways to get in touch.
           </p>
-          <p className="mt-4 text-sm text-gray-400">
+          <p
+            className={`mt-4 text-sm ${isDark ? "text-gray-400" : "text-slate-600"}`}
+          >
             Email:{" "}
             <a
               href="mailto:user@example.com"
-              className="text-blue-400 transition duration-300 hover:text-blue-300"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-blue-400 hover:text-blue-300"
+                  : "text-blue-600 hover:text-blue-700"
+              }`}
             >
               user@example.com
             </a>
@@ -70,7 +95,11 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-widest text-gray-200">
+          <h3
+            className={`text-sm font-semibold uppercase tracking-widest ${
+              isDark ? "text-gray-200" : "text-slate-900"
+            }`}
+          >
             Quick Links
           </h3>
           <ul className="mt-4 space-y-3">
@@ -78,7 +107,11 @@ const Footer = () => {
               <li key={link.label}>
                 <Link
                   to={link.to}
-                  className="inline-flex text-sm text-gray-400 transition duration-300 hover:translate-x-1 hover:text-blue-300"
+                  className={`inline-flex text-sm transition duration-300 hover:translate-x-1 ${
+                    isDark
+                      ? "text-gray-400 hover:text-blue-300"
+                      : "text-slate-600 hover:text-blue-600"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -88,10 +121,16 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-widest text-gray-200">
+          <h3
+            className={`text-sm font-semibold uppercase tracking-widest ${
+              isDark ? "text-gray-200" : "text-slate-900"
+            }`}
+          >
             Contact &amp; social
           </h3>
-          <p className="mt-4 text-sm text-gray-400">
+          <p
+            className={`mt-4 text-sm ${isDark ? "text-gray-400" : "text-slate-600"}`}
+          >
             Connect through socials or send a quick email.
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -102,7 +141,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={item.label}
-                className="group inline-flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300 shadow-[0_0_0_rgba(59,130,246,0)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-400/80 hover:bg-blue-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(59,130,246,0.45)]"
+                className={`group inline-flex h-10 w-10 items-center justify-center rounded-xl border shadow-[0_0_0_rgba(59,130,246,0)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_24px_rgba(59,130,246,0.25)] ${
+                  isDark
+                    ? "border-blue-500/30 bg-blue-500/10 text-blue-300 hover:border-blue-400/80 hover:bg-blue-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(59,130,246,0.45)]"
+                    : "border-slate-200 bg-slate-100 text-slate-700 hover:border-blue-400/60 hover:bg-blue-50 hover:text-blue-700"
+                }`}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -117,8 +160,14 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-blue-500/5">
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-gray-500 sm:flex-row sm:px-6 lg:px-8">
+      <div
+        className={`border-t ${isDark ? "border-blue-500/5" : "border-slate-200"}`}
+      >
+        <div
+          className={`mx-auto flex w-full max-w-400 flex-col items-center justify-between gap-2 px-4 py-4 text-xs sm:flex-row sm:px-6 lg:px-10 ${
+            isDark ? "text-gray-500" : "text-slate-500"
+          }`}
+        >
           <p>© {new Date().getFullYear()} User. All rights reserved.</p>
           <p>Built with React and TypeScript.</p>
         </div>
