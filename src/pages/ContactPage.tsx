@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 const CONTACT_CHANNELS = [
   {
@@ -24,6 +25,28 @@ const CONTACT_CHANNELS = [
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const { isDark } = useTheme();
+
+  const pageClasses = isDark
+    ? "relative overflow-hidden bg-black py-20 text-white"
+    : "relative overflow-hidden bg-slate-50 py-20 text-slate-900";
+
+  const cardClasses = isDark
+    ? "group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-primary/30"
+    : "group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-primary/30";
+
+  const panelClasses = isDark
+    ? "rounded-2xl border border-white/10 bg-white/5 p-6"
+    : "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm";
+
+  const titleText = isDark ? "text-white" : "text-slate-900";
+  const mutedText = isDark ? "text-white/60" : "text-slate-600";
+  const softText = isDark ? "text-white/50" : "text-slate-500";
+  const dividerClass = isDark ? "border-white/10" : "border-slate-200";
+  const labelClass = isDark ? "text-white/80" : "text-slate-700";
+  const inputClasses = isDark
+    ? "w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
+    : "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-primary/50 focus:bg-white";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,29 +82,41 @@ const ContactPage = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden bg-black py-20 text-white"
-    >
+    <section id="contact" className={pageClasses}>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl opacity-50" />
-        <div className="absolute bottom-1/4 right-0 h-96 w-96 rounded-full bg-primary/10 blur-3xl opacity-50" />
+        <div
+          className={`absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl opacity-50 ${
+            isDark ? "bg-primary/10" : "bg-blue-200/40"
+          }`}
+        />
+        <div
+          className={`absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl opacity-50 ${
+            isDark ? "bg-primary/10" : "bg-violet-200/40"
+          }`}
+        />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
         <div className="mb-16 text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2">
-            <span aria-hidden="true" className="text-sm text-primary">
+          <div
+            className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-primary/10" : "border-blue-200 bg-blue-50"}`}
+          >
+            <span
+              aria-hidden="true"
+              className={`text-sm ${isDark ? "text-primary" : "text-blue-600"}`}
+            >
               *
             </span>
-            <span className="text-sm font-medium text-primary">
+            <span
+              className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
+            >
               Get In Touch
             </span>
           </div>
-          <h1 className="mb-4 text-4xl font-normal text-white lg:text-5xl">
+          <h1 className={`mb-4 text-4xl font-normal lg:text-5xl ${titleText}`}>
             Let&apos;s Build Something Useful
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-white/60">
+          <p className={`mx-auto max-w-2xl text-lg ${mutedText}`}>
             I build clean, reliable web products for teams and founders. Share
             your project and I will reply with a practical plan, timeline, and
             next steps.
@@ -89,13 +124,17 @@ const ContactPage = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
-          <div className="group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-primary/30 lg:col-span-3">
-            <div className="mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
+          <div className={`${cardClasses} lg:col-span-3`}>
+            <div
+              className={`mb-6 flex items-center gap-3 border-b pb-4 ${dividerClass}`}
+            >
               <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
-              <h2 className="text-xl font-medium text-white">Project Brief</h2>
+              <h2 className={`text-xl font-medium ${titleText}`}>
+                Project Brief
+              </h2>
             </div>
 
-            <p id="contact-form-help" className="mb-5 text-sm text-white/60">
+            <p id="contact-form-help" className={`mb-5 text-sm ${mutedText}`}>
               Include your goals, timeline, and what success looks like.
             </p>
 
@@ -106,7 +145,7 @@ const ContactPage = () => {
               aria-describedby="contact-form-help"
             >
               <label className="form-control sm:col-span-1">
-                <span className="mb-2 text-sm font-medium text-white/80">
+                <span className={`mb-2 text-sm font-medium ${labelClass}`}>
                   Your Name
                 </span>
                 <input
@@ -116,12 +155,12 @@ const ContactPage = () => {
                   required
                   autoComplete="name"
                   placeholder="Jane Doe"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
+                  className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-1">
-                <span className="mb-2 text-sm font-medium text-white/80">
+                <span className={`mb-2 text-sm font-medium ${labelClass}`}>
                   Email
                 </span>
                 <input
@@ -131,12 +170,12 @@ const ContactPage = () => {
                   required
                   autoComplete="email"
                   placeholder="jane@company.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
+                  className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-2">
-                <span className="mb-2 text-sm font-medium text-white/80">
+                <span className={`mb-2 text-sm font-medium ${labelClass}`}>
                   What are you building?
                 </span>
                 <input
@@ -145,12 +184,12 @@ const ContactPage = () => {
                   type="text"
                   required
                   placeholder="Developer portfolio, product dashboard, SaaS landing page"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
+                  className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-2">
-                <span className="mb-2 text-sm font-medium text-white/80">
+                <span className={`mb-2 text-sm font-medium ${labelClass}`}>
                   Project Details
                 </span>
                 <textarea
@@ -159,7 +198,7 @@ const ContactPage = () => {
                   required
                   rows={5}
                   placeholder="Tell me what you need, who it is for, and your ideal launch window."
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
+                  className={inputClasses}
                 />
               </label>
 
@@ -170,7 +209,7 @@ const ContactPage = () => {
                 >
                   {submitted ? "Message Sent" : "Send Message"}
                 </button>
-                <span className="text-sm text-white/50">
+                <span className={`text-sm ${softText}`}>
                   Typical response: within 24 hours
                 </span>
               </div>
@@ -180,7 +219,7 @@ const ContactPage = () => {
               <div
                 role="status"
                 aria-live="polite"
-                className="mt-5 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary"
+                className={`mt-5 rounded-xl border px-4 py-3 text-sm ${isDark ? "border-primary/30 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}
               >
                 Your email app should open with a pre-filled draft. Send it and
                 I will reply soon.
@@ -191,10 +230,12 @@ const ContactPage = () => {
           </div>
 
           <aside className="space-y-8 lg:col-span-2">
-            <div className="group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-primary/30">
-              <div className="mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
+            <div className={cardClasses}>
+              <div
+                className={`mb-6 flex items-center gap-3 border-b pb-4 ${dividerClass}`}
+              >
                 <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
-                <h2 className="text-xl font-medium text-white">
+                <h2 className={`text-xl font-medium ${titleText}`}>
                   Direct Channels
                 </h2>
               </div>
@@ -212,15 +253,17 @@ const ContactPage = () => {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    className="block rounded-xl border border-white/10 bg-black/30 p-3 transition hover:border-primary/40"
+                    className={`block rounded-xl border p-3 transition hover:border-primary/40 ${isDark ? "border-white/10 bg-black/30" : "border-slate-200 bg-slate-50 hover:bg-slate-100"}`}
                   >
-                    <p className="text-sm font-medium text-primary">
+                    <p
+                      className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
+                    >
                       {channel.title}
                     </p>
-                    <p className="break-all text-sm text-white">
+                    <p className={`break-all text-sm ${titleText}`}>
                       {channel.value}
                     </p>
-                    <p className="mt-1 text-xs text-white/50">
+                    <p className={`mt-1 text-xs ${softText}`}>
                       {channel.description}
                       {channel.href.startsWith("http")
                         ? " Opens in a new tab."
@@ -233,15 +276,17 @@ const ContactPage = () => {
               <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-primary/0 to-primary/5 opacity-0 transition-all duration-300 group-hover:opacity-100" />
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h2 className="mb-3 text-xl font-medium text-white">
+            <div className={panelClasses}>
+              <h2 className={`mb-3 text-xl font-medium ${titleText}`}>
                 Availability
               </h2>
-              <p className="text-sm text-white/60">
+              <p className={`text-sm ${mutedText}`}>
                 Open to freelance builds, long-term product work, and internship
                 opportunities in frontend and full-stack development.
               </p>
-              <div className="mt-4 inline-flex rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              <div
+                className={`mt-4 inline-flex rounded-full border px-3 py-1 text-xs font-medium ${isDark ? "border-primary/40 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}
+              >
                 Next slot: May 2026
               </div>
             </div>
