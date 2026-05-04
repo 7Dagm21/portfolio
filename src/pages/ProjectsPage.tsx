@@ -136,14 +136,14 @@ const ProjectsPage = () => {
                 disabled={currentIndex >= filteredProjects.length - 3}
                 className="flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 lg:translate-x-4 items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed z-10"
                 aria-label="Next projects">
-                  <ChevronRight className=""/>
+                  <ChevronRight className="w-6 h-6 text-white"/>
                 </button>
               </> 
             )}
 
             {/* Navigation dots */}
             {filteredProjects.length > 3 && (
-              <div className="">
+              <div className="flex items-center justify-center gap-2 mt-8">
                 {Array.from({ length: Math.max(0, filteredProjects.length - 2) }, (_, index) => (
                   <button
                     key={index}
