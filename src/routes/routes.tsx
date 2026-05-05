@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import type { RouteObject } from "react-router";
 import { RootLayout } from "@/layouts";
-import { HomePage, AboutPage } from "@/pages";
+import { HomePage, AboutPage, SkillsPage, ContactPage } from "@/pages";
 
 export const routes: RouteObject[] = [
   {
@@ -15,6 +15,14 @@ export const routes: RouteObject[] = [
       {
         path: "/about",
         element: <AboutPage />,
+      },
+      {
+        path: "/skills",
+        element: <SkillsPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
     ],
   },
