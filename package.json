@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "bunx eslint . --fix",
     "format": "bunx prettier . --write"
   },
   "dependencies": {

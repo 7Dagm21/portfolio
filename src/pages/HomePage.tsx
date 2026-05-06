@@ -1,4 +1,4 @@
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 
 const HomePage = () => {
   const { isDark } = useTheme();
@@ -31,8 +31,8 @@ const HomePage = () => {
             isDark ? "text-white/60" : "text-slate-600"
           }`}
         >
-          This home section now fills the desktop viewport more naturally so
-          the layout feels balanced instead of tiny.
+          This home section now fills the desktop viewport more naturally so the
+          layout feels balanced instead of tiny.
         </p>
       </div>
     </section>

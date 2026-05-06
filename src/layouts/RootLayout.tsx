@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Footer, Header } from "@/components/ui";
-import { ThemeProvider, useTheme } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 
 const LayoutShell = () => {
   const { isDark } = useTheme();
