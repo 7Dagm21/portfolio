@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import type { ReactNode } from "react";
 
 type Theme = "dark" | "light";
@@ -25,7 +31,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
+      "(prefers-color-scheme: dark)"
     ).matches;
     setTheme(prefersDark ? "dark" : "light");
   }, []);
@@ -42,10 +48,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       isDark: theme === "dark",
       toggleTheme: () =>
         setTheme((currentTheme) =>
-          currentTheme === "dark" ? "light" : "dark",
+          currentTheme === "dark" ? "light" : "dark"
         ),
     }),
-    [theme],
+    [theme]
   );
 
   return (

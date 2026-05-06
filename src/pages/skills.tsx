@@ -22,14 +22,14 @@ const levelClass: Record<SkillLevel, string> = {
 const skillCategories: SkillMap = {
   Frontend: skills.filter((skill: SkillItem) =>
     ["React", "JavaScript", "TypeScript", "Next.js", "Tailwind CSS"].includes(
-      skill.name,
-    ),
+      skill.name
+    )
   ),
   Backend: skills.filter((skill: SkillItem) =>
-    ["Node.js", "Express.js", "MongoDB"].includes(skill.name),
+    ["Node.js", "Express.js", "MongoDB"].includes(skill.name)
   ),
   Tools: skills.filter((skill: SkillItem) =>
-    ["Git & GitHub", "Docker", "Postman", "Figma"].includes(skill.name),
+    ["Git & GitHub", "Docker", "Postman", "Figma"].includes(skill.name)
   ),
 };
 
@@ -59,7 +59,7 @@ const Skills = () => {
   const { isDark } = useTheme();
   const [activeCategory, setActiveCategory] = useState<ActiveCategory>("All");
   const [selectedSkillId, setSelectedSkillId] = useState<number>(
-    skills[0]?.id ?? 1,
+    skills[0]?.id ?? 1
   );
   const [isMounted, setIsMounted] = useState(false);
   const showSelectedPanel = activeCategory !== "All";
@@ -95,7 +95,7 @@ const Skills = () => {
     skills.find((skill) => skill.id === selectedSkillId) ?? skills[0];
   const selectedSkillCategory =
     Object.entries(skillCategories).find(([, categorySkills]) =>
-      categorySkills.some((skill) => skill.id === selectedSkill?.id),
+      categorySkills.some((skill) => skill.id === selectedSkill?.id)
     )?.[0] ?? "Frontend";
 
   const tabs: ActiveCategory[] = ["All", "Frontend", "Backend", "Tools"];
@@ -296,7 +296,7 @@ const Skills = () => {
 
                   <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-primary/0 to-primary/5 opacity-0 transition-all duration-300 group-hover:opacity-100" />
                 </div>
-              ),
+              )
             )}
           </div>
 

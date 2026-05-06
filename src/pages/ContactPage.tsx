@@ -58,7 +58,7 @@ const ContactPage = () => {
     const details = String(formData.get("details") ?? "").trim();
 
     const subject = encodeURIComponent(
-      `Project inquiry from ${name || "Website visitor"}`,
+      `Project inquiry from ${name || "Website visitor"}`
     );
     const body = encodeURIComponent(
       [
@@ -68,7 +68,7 @@ const ContactPage = () => {
         "",
         "Project details:",
         details,
-      ].join("\n"),
+      ].join("\n")
     );
 
     window.location.href = `mailto:dagti@gmail.com?subject=${subject}&body=${body}`;
@@ -281,8 +281,9 @@ const ContactPage = () => {
                 Availability
               </h2>
               <p className={`text-sm ${mutedText}`}>
-                Open to freelance builds, long-term product work, and internship
-                opportunities in frontend and full-stack development.
+                Open to freelance builds, long-term product work, and
+                internship opportunities in frontend and full-stack
+                development.
               </p>
               <div
                 className={`mt-4 inline-flex rounded-full border px-3 py-1 text-xs font-medium ${isDark ? "border-primary/40 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}

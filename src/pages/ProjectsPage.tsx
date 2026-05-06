@@ -33,9 +33,9 @@ const ProjectsPage = () => {
       activeCategory === "All"
         ? FEATURED_PROJECTS
         : FEATURED_PROJECTS.filter(
-            (project) => project.category === activeCategory,
+            (project) => project.category === activeCategory
           ),
-    [activeCategory],
+    [activeCategory]
   );
 
   const handleCategoryChange = (category: string) => {
@@ -172,7 +172,7 @@ const ProjectsPage = () => {
                       className={getDotClasses(index)}
                       aria-label={`Go to slide ${index + 1}`}
                     />
-                  ),
+                  )
                 )}
               </div>
             )}
