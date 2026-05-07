@@ -5,6 +5,7 @@ import {
   HomePage,
   AboutPage,
   SkillsPage,
+  ServicesPage,
   ContactPage,
   ProjectsPage,
 } from "@/pages";
@@ -29,6 +30,10 @@ export const routes: RouteObject[] = [
       {
         path: "/skills",
         element: <SkillsPage />,
+      },
+      {
+        path: "/services",
+        element: <ServicesPage />,
       },
       {
         path: "/contact",

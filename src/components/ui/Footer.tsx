@@ -6,7 +6,9 @@ const quickLinks = [
   { label: "About", to: "/about" },
   { label: "Skills", to: "/skills" },
   { label: "Projects", to: "/projects" },
+  { label: "Services", to: "/services" },
   { label: "Contact", to: "/contact" },
+  
 ];
 
 const socialLinks = [
