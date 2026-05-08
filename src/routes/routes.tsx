@@ -8,12 +8,14 @@ import {
   ServicesPage,
   ContactPage,
   ProjectsPage,
+  TestimonialsPage,
 } from "@/pages";
+
 
 export const routes: RouteObject[] = [
   {
-    element: <RootLayout />,
-    children: [
+        element: <RootLayout />,
+        children: [
       {
         index: true,
         path: "/",
@@ -39,8 +41,13 @@ export const routes: RouteObject[] = [
         path: "/contact",
         element: <ContactPage />,
       },
+      {
+        path: "/testimonials",
+        element: <TestimonialsPage />,
+      },
     ],
   },
 ];
+
 
 export const router = createBrowserRouter(routes);
