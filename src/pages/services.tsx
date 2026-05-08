@@ -48,14 +48,14 @@ const ServicesPage = () => {
   return (
     <section id="services" className={pageClasses}>
       <div className="services-grid-overlay pointer-events-none absolute inset-0 overflow-hidden opacity-40" />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className={`services-float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"}`}
-        />
-        <div
-          className={`services-float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"}`}
-        />
-      </div>
+       <div className="pointer-events-none absolute inset-0 overflow-hidden">
+         <div
+           className={`float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"}`}
+         />
+         <div
+           className={`float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"}`}
+         />
+       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
         <div
@@ -63,9 +63,9 @@ const ServicesPage = () => {
             isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          <div
-            className={`services-shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}
-          >
+           <div
+             className={`shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}
+           >
             <span
               className={`flex h-4 w-4 items-center justify-center text-sm ${isDark ? "text-primary" : "text-blue-600"}`}
             >

@@ -5,8 +5,14 @@ export interface ButtonProps {
 }
 
 const Button = ({ label, onClick, variant = "primary" }: ButtonProps) => {
+  const variantMap: Record<ButtonProps["variant"], string> = {
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    outlined: "btn-outline",
+  };
+
   return (
-    <button className={`btn btn-${variant}`} onClick={onClick}>
+    <button className={`btn ${variantMap[variant]}`} onClick={onClick}>
       {label}
     </button>
   );

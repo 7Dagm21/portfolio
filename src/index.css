@@ -7,7 +7,7 @@
 }
 
 @layer utilities {
-  @keyframes skills-float {
+  @keyframes float {
     0%,
     100% {
       transform: translateY(0px) scale(1);
@@ -18,7 +18,7 @@
     }
   }
 
-  @keyframes skills-glow {
+  @keyframes glow {
     0%,
     100% {
       opacity: 0.35;
@@ -31,7 +31,7 @@
     }
   }
 
-  @keyframes skills-shimmer {
+  @keyframes shimmer {
     0% {
       background-position: 0% 50%;
     }
@@ -41,97 +41,47 @@
     }
   }
 
-  .skills-float {
-    animation: skills-float 8s ease-in-out infinite;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .skills-float-slow {
-    animation: skills-float 12s ease-in-out infinite;
+  .float {
+    animation: float 8s ease-in-out infinite;
   }
 
-  .skills-glow {
-    animation: skills-glow 7s ease-in-out infinite;
+  .float-slow {
+    animation: float 12s ease-in-out infinite;
   }
 
-  .skills-shimmer {
+  .glow {
+    animation: glow 7s ease-in-out infinite;
+  }
+
+  .shimmer {
     background-size: 200% 200%;
-    animation: skills-shimmer 3.5s linear infinite;
+    animation: shimmer 3.5s linear infinite;
   }
 
-  .skills-grid-overlay {
+  .animate-fadeIn {
+    animation-name: fadeIn;
+    animation-timing-function: ease-out;
+  }
+
+  .grid-overlay {
     background-image:
       linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
     background-size: 72px 72px;
   }
 
-  .skills-card-hover {
-    transition:
-      transform 300ms ease,
-      box-shadow 300ms ease,
-      border-color 300ms ease,
-      background-color 300ms ease;
-  }
-
-  @keyframes services-float {
-    0%,
-    100% {
-      transform: translateY(0px) scale(1);
-    }
-
-    50% {
-      transform: translateY(-12px) scale(1.02);
-    }
-  }
-
-  @keyframes services-glow {
-    0%,
-    100% {
-      opacity: 0.35;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 0.65;
-      transform: scale(1.08);
-    }
-  }
-
-  @keyframes services-shimmer {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    100% {
-      background-position: 200% 50%;
-    }
-  }
-
-  .services-float {
-    animation: services-float 8s ease-in-out infinite;
-  }
-
-  .services-float-slow {
-    animation: services-float 12s ease-in-out infinite;
-  }
-
-  .services-glow {
-    animation: services-glow 7s ease-in-out infinite;
-  }
-
-  .services-shimmer {
-    background-size: 200% 200%;
-    animation: services-shimmer 3.5s linear infinite;
-  }
-
-  .services-grid-overlay {
-    background-image:
-      linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
-    background-size: 72px 72px;
-  }
-
-  .services-card-hover {
+  .card-hover {
     transition:
       transform 300ms ease,
       box-shadow 300ms ease,

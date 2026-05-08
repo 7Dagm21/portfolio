@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
-import { testimonials } from '../data/testimonials.js';
-import FadeIn from '../animations/FadeIn';
+import { testimonials } from '../data/testimonials';
+import FadeIn from '../animations/FadeIn.tsx';
 
 const Testimonials = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,6 +33,8 @@ const Testimonials = () => {
         { value: '95%', label: 'Client Satisfaction' },
         { value: '100%', label: 'On-Time Delivery' },
         { value: '5*', label: 'Average Rating' },
+        { value: '200+', label: 'Hours Saved' },
+        { value: '98%', label: 'Quality Score' },
     ];
 
     return (
