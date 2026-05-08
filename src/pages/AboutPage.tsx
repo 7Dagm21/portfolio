@@ -1,7 +1,24 @@
+import { useEffect, useState } from "react";
 import { useTheme } from "@/context/useTheme";
+import { Code2, Zap, FileType, Palette, Server, Database } from "lucide-react";
+
+const techStack = [
+  { id: 1, name: "React", icon: Code2, color: "text-cyan-400" },
+  { id: 2, name: "Next.js", icon: Zap, color: "text-white" },
+  { id: 3, name: "TypeScript", icon: FileType, color: "text-blue-400" },
+  { id: 4, name: "Tailwind CSS", icon: Palette, color: "text-cyan-300" },
+  { id: 5, name: "Node.js", icon: Server, color: "text-green-400" },
+  { id: 6, name: "MongoDB", icon: Database, color: "text-green-500" },
+];
 
 export default function AboutPage() {
   const { isDark } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setIsMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <div
@@ -204,6 +221,66 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tech Stack Section */}
+      <div
+        className={`mt-32 transition-all duration-700 ease-out ${
+          isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+        }`}
+      >
+        <div className="mb-12 text-center">
+          <h2
+            className={`mb-4 text-3xl font-normal lg:text-4xl ${isDark ? "text-white" : "text-slate-900"}`}
+          >
+            Tech Stack & Expertise
+          </h2>
+          <p
+            className={`text-base ${isDark ? "text-white/60" : "text-slate-600"}`}
+          >
+            Technologies I work with to build amazing products
+          </p>
+        </div>
+
+        {/* Scrollable Container */}
+        <div className="overflow-x-auto pb-4 scrollbar-hide flex justify-center">
+          <div className="flex gap-6 min-w-max px-4">
+            {techStack.map((tech, index) => {
+              const Icon = tech.icon;
+              return (
+                <div
+                  key={tech.id}
+                  className={`transition-all duration-700 ease-out ${
+                    isMounted
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-4 opacity-0"
+                  }`}
+                  style={{
+                    transitionDelay: isMounted ? `${index * 100}ms` : "0ms",
+                  }}
+                >
+                  <div
+                    className={`group relative flex flex-col items-center justify-center rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 min-w-max ${
+                      isDark
+                        ? "border-white/10 bg-white/5 hover:bg-white/[0.07]"
+                        : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"
+                    }`}
+                  >
+                    <Icon
+                      className={`mb-3 h-10 w-10 ${tech.color}`}
+                      strokeWidth={1.5}
+                    />
+                    <span
+                      className={`text-center text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}
+                    >
+                      {tech.name}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
