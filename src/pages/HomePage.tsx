@@ -103,11 +103,8 @@ const HomePage = () => {
         {/* Right Column — Image */}
         <FadeIn delay={300} duration={600}>
           <div className="relative flex items-center justify-center lg:justify-start">
-
             {/* Image */}
-            <div
-              className="relative z-10 rounded-3xl border border-base-300 bg-base-100 p-2 shadow-xl"
-            >
+            <div className="relative z-10 rounded-3xl bg-base-100 p-2 shadow-xl">
               <img
                 src={heroImage}
                 alt="Profile photo"
@@ -124,7 +121,6 @@ const HomePage = () => {
                 Open to Work
               </div>
             </div>
-
           </div>
         </FadeIn>
       </div>
