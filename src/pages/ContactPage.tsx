@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 
 const CONTACT_CHANNELS = [
   {
@@ -48,7 +48,7 @@ const ContactPage = () => {
     ? "w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
     : "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-primary/50 focus:bg-white";
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -71,7 +71,7 @@ const ContactPage = () => {
       ].join("\n"),
     );
 
-    window.location.href = `mailto:dagti@gmail.com?subject=${subject}&body=${body}`;
+    window.open(`mailto:dagti@gmail.com?subject=${subject}&body=${body}`, "_blank");
     setSubmitted(true);
   };
 

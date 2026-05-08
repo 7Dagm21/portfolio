@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Skills", to: "/skills" },
   { label: "Projects", to: "/projects" },
+  { label: "Services", to: "/services" },
+  { label: "Testimonials", to: "/testimonials" },
   { label: "Contact", to: "/contact" },
 ];
 

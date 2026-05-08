@@ -11,7 +11,7 @@ const NAV_LINKS: NavLinkItem[] = [
   { path: "/skills", label: "Skills" },
   { path: "/projects", label: "Projects" },
   { path: "/contact", label: "Contact" },
-
+  { path: "/testimonials", label: "Testimonials" }
 ];
 
 interface NavLinksProps {

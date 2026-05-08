@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 import { skills, type SkillItem, type SkillLevel } from "../data/skills";
 
 type SkillMap = Record<string, SkillItem[]>;
@@ -62,6 +62,7 @@ const Skills = () => {
     skills[0]?.id ?? 1,
   );
   const [isMounted, setIsMounted] = useState(false);
+
   const showSelectedPanel = activeCategory !== "All";
 
   useEffect(() => {
@@ -85,14 +86,15 @@ const Skills = () => {
     return skillCategories[activeCategory];
   }, [activeCategory]);
 
-  useEffect(() => {
-    if (!visibleSkills.some((skill) => skill.id === selectedSkillId)) {
-      setSelectedSkillId(visibleSkills[0]?.id ?? skills[0]?.id ?? 1);
+  const effectiveSelectedId = useMemo(() => {
+    if (visibleSkills.some((skill) => skill.id === selectedSkillId)) {
+      return selectedSkillId;
     }
-  }, [visibleSkills, selectedSkillId]);
+    return visibleSkills[0]?.id ?? skills[0]?.id ?? 1;
+  }, [selectedSkillId, visibleSkills]);
 
   const selectedSkill =
-    skills.find((skill) => skill.id === selectedSkillId) ?? skills[0];
+    skills.find((skill) => skill.id === effectiveSelectedId) ?? skills[0];
   const selectedSkillCategory =
     Object.entries(skillCategories).find(([, categorySkills]) =>
       categorySkills.some((skill) => skill.id === selectedSkill?.id),
@@ -119,17 +121,17 @@ const Skills = () => {
   return (
     <section id="skills" className={pageClasses}>
       <div className="skills-grid-overlay pointer-events-none absolute inset-0 overflow-hidden opacity-40" />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className={`skills-float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"}`}
-        />
-        <div
-          className={`skills-float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"}`}
-        />
-        <div
-          className={`skills-glow absolute left-1/4 top-10 h-28 w-28 rounded-full blur-2xl ${isDark ? "bg-cyan-400/20" : "bg-blue-300/30"}`}
-        />
-      </div>
+         <div className="pointer-events-none absolute inset-0 overflow-hidden">
+         <div
+           className={`float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"}`}
+         />
+         <div
+           className={`float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"}`}
+         />
+         <div
+           className={`glow absolute left-1/4 top-10 h-28 w-28 rounded-full blur-2xl ${isDark ? "bg-cyan-400/20" : "bg-blue-300/30"}`}
+         />
+       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
         <div
@@ -137,9 +139,9 @@ const Skills = () => {
             isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          <div
-            className={`skills-shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}
-          >
+            <div
+              className={`shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}
+            >
             <span
               className={`flex h-4 w-4 items-center justify-center text-sm ${isDark ? "text-primary" : "text-blue-600"}`}
             >
@@ -232,7 +234,7 @@ const Skills = () => {
                     {categorySkills.map((skill, skillIndex) => {
                       const icon = getIconLabel(skill.icon);
                       const proficiency = levelWidth[skill.level];
-                      const isSelected = selectedSkillId === skill.id;
+                      const isSelected = effectiveSelectedId === skill.id;
 
                       return (
                         <div key={skill.id} className="space-y-2">
@@ -283,7 +285,7 @@ const Skills = () => {
                             className={`relative h-1.5 overflow-hidden rounded-full ${isDark ? "bg-white/5" : "bg-slate-100"}`}
                           >
                             <div
-                              className="absolute left-0 top-0 h-full rounded-full bg-linear-to-r from-primary/10 via-primary/50 to-primary/80 transition-all duration-1000 ease-out skills-shimmer"
+                              className="absolute left-0 top-0 h-full rounded-full bg-linear-to-r from-primary/10 via-primary/50 to-primary/80 transition-all duration-1000 ease-out shimmer"
                               style={{
                                 width: `${isMounted ? proficiency : 0}%`,
                               }}
@@ -369,7 +371,7 @@ const Skills = () => {
                         className={`h-2 overflow-hidden rounded-full ${isDark ? "bg-white/5" : "bg-slate-100"}`}
                       >
                         <div
-                          className="h-full rounded-full bg-linear-to-r from-primary/10 via-primary/50 to-primary/80 transition-all duration-1000 ease-out skills-shimmer"
+                          className="h-full rounded-full bg-linear-to-r from-primary/10 via-primary/50 to-primary/80 transition-all duration-1000 ease-out shimmer"
                           style={{
                             width: `${isMounted ? levelWidth[selectedSkill.level] : 0}%`,
                           }}
