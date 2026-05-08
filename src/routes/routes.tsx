@@ -1,16 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import type { RouteObject } from "react-router";
 import { RootLayout } from "@/layouts";
-import {
-  HomePage,
-  AboutPage,
-  SkillsPage,
-  ServicesPage,
-  ContactPage,
-  ProjectsPage,
-  TestimonialsPage,
-} from "@/pages";
-
+import { HomePage, AboutPage, SkillsPage, ContactPage, ProjectsPage, ServicesPage } from "@/pages";
 
 export const routes: RouteObject[] = [
   {
@@ -40,10 +31,6 @@ export const routes: RouteObject[] = [
       {
         path: "/contact",
         element: <ContactPage />,
-      },
-      {
-        path: "/testimonials",
-        element: <TestimonialsPage />,
       },
     ],
   },

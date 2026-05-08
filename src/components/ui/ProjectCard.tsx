@@ -24,17 +24,22 @@ const ProjectCard = ({
           : "border-slate-200 bg-white hover:border-blue-600/30"
       }`}
     >
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative overflow-hidden">
         <img
           src={project.image}
-          alt={project.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          alt={`${project.title} thumbnail`}
+          className="w-full h-48 object-cover transition-all duration-500 brightness-75 group-hover:brightness-100"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-black/20 transition-opacity duration-500 group-hover:bg-black/10" />
       </div>
 
-      <div className="space-y-4 p-6">
+      <div className="p-6 space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`px-3 py-1 text-xs font-semibold rounded-full ${isDark ? "bg-blue-300/10 text-blue-300 border border-blue-300/20" : "bg-blue-600/10 text-blue-600 border border-blue-600/20"}`}>
+            {project.category}
+          </span>
+        </div>
+
         <div>
           <h3
             className={`mb-2 text-xl font-semibold transition-colors duration-300 ${
