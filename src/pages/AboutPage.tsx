@@ -214,8 +214,6 @@ const AboutPage = () => {
           </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default AboutPage;
+}
