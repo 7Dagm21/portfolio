@@ -6,32 +6,33 @@ const FadeIn = ({ children, delay = 0, duration = 500, threshold = 0.1 }: {
   duration?: number; 
   threshold?: number 
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const elementRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && !isVisible) {
-                    setIsVisible(true);
-                }
-            },
-            {
-                threshold: threshold,
-                rootMargin: '0px 0px -50px 0px',
-            }
-        );
-
-        if (elementRef.current) {
-            observer.observe(elementRef.current);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
         }
+      },
+      {
+        threshold: threshold,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
 
-        return () => {
-            if (elementRef.current) {
-                observer.unobserve(elementRef.current);
-            }
-        };
-    }, [isVisible, threshold]);
+    const currentElement = elementRef.current;
+    if (currentElement) {
+      observer.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        observer.unobserve(currentElement);
+      }
+    };
+  }, [isVisible, threshold]);
 
     return (
         <div
