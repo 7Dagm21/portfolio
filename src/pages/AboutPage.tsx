@@ -6,7 +6,7 @@ const AboutPage = () => {
   return (
     <section className="flex min-h-[calc(100vh-9rem)] w-full items-center justify-center px-4 py-20 sm:px-6 lg:px-10">
       <div
-        className={`w-full max-w-400 rounded-3xl p-8 shadow-sm sm:p-12 lg:p-16 ${
+        className={`w-full max-w-6xl rounded-3xl p-8 shadow-sm sm:p-12 lg:p-16 ${
           isDark
             ? "border border-white/10 bg-white/5"
             : "border border-slate-200/70 bg-white"

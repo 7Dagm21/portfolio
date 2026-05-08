@@ -57,7 +57,7 @@ const ServicesPage = () => {
          />
        </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-10">
         <div
           className={`mb-16 text-center transition-all duration-700 ease-out ${
             isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
