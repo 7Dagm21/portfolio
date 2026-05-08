@@ -1,0 +1,183 @@
+// Oh My OpenCode Configuration - 100% Free Models
+// Uses only completely free models: Big Pickle, GPT-5 Nano, MiniMax M2.5, GLM-5
+// See: https://github.com/code-yeongyu/oh-my-openagent
+
+{
+  // Enable hash-anchored edits (prevents stale-line errors)
+  "hashline_edit": true,
+
+  // Enable model fallback
+  "model_fallback": true,
+
+  // Configure categories to use free models
+  "categories": {
+    "visual-engineering": {
+      "description": "Frontend, UI/UX, design, styling, animation",
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ]
+    },
+    "deep": {
+      "description": "Goal-oriented autonomous problem-solving. Thorough research before action.",
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ]
+    },
+    "quick": {
+      "description": "Trivial tasks - single file changes, typo fixes, simple modifications",
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "minimax/minimax-m2.5:free"
+      ]
+    },
+    "ultrabrain": {
+      "description": "Complex problem-solving with unconventional, creative approaches",
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free",
+        "opencode/gpt-5-nano"
+      ],
+      "temperature": 0.7
+    },
+    "unspecified-low": {
+      "description": "Tasks that don't fit other categories, low effort required",
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "minimax/minimax-m2.5:free"
+      ]
+    },
+    "unspecified-high": {
+      "description": "Tasks that don't fit other categories, high effort required",
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ]
+    },
+    "writing": {
+      "description": "Documentation, prose, technical writing",
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "z-ai/glm-5:free"
+      ]
+    },
+    "artistry": {
+      "description": "Complex problem-solving with unconventional, creative approaches - beyond standard patterns",
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ]
+    }
+  },
+
+  // Configure agents to use free models
+  "agents": {
+    "sisyphus": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.7,
+      "maxTokens": 8192
+    },
+    "prometheus": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.5
+    },
+    "metis": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free"
+      ],
+      "temperature": 0.6
+    },
+    "momus": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free"
+      ],
+      "temperature": 0.5
+    },
+    "oracle": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.6,
+      "maxTokens": 8192
+    },
+    "librarian": {
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "minimax/minimax-m2.5:free"
+      ],
+      "temperature": 0.5
+    },
+    "explore": {
+      "model": "opencode/gpt-5-nano",
+      "fallback_models": [
+        "opencode/big-pickle",
+        "minimax/minimax-m2.5:free"
+      ],
+      "temperature": 0.4
+    },
+    "hephaestus": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.7,
+      "maxTokens": 16384
+    },
+    "build": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.7,
+      "maxTokens": 16384
+    },
+    "general": {
+      "model": "opencode/big-pickle",
+      "fallback_models": [
+        "opencode/gpt-5-nano",
+        "minimax/minimax-m2.5:free",
+        "z-ai/glm-5:free"
+      ],
+      "temperature": 0.7
+    }
+  },
+
+  // Built-in skills
+  "disabled_skills": [],
+
+  // MCP configurations
+  "disabled_mcps": [],
+
+  // Disable hooks that might not be needed
+  "disabled_hooks": []
+}
