@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import { testimonials } from '../data/testimonials';
 import FadeIn from '../animations/FadeIn.tsx';
 
 const Testimonials = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const scrollContainerRef = useRef(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    const scrollToIndex = (index) => {
+    const scrollToIndex = (index: number) => {
         setCurrentIndex(index);
         if (scrollContainerRef.current) {
             const cardWidth = scrollContainerRef.current.offsetWidth;

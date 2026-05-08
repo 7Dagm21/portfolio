@@ -1,7 +1,7 @@
 export interface ButtonProps {
   onClick?: () => void;
   label: string;
-  variant?: "primary" | "secondary" | "outlined";
+  variant: "primary" | "secondary" | "outlined";
 }
 
 const Button = ({ label, onClick, variant = "primary" }: ButtonProps) => {
@@ -12,7 +12,7 @@ const Button = ({ label, onClick, variant = "primary" }: ButtonProps) => {
   };
 
   return (
-    <button className={`btn ${variantMap[variant]}`} onClick={onClick}>
+    <button className={`btn ${variantMap[variant]}`} onClick={onClick ?? (() => {})}>
       {label}
     </button>
   );

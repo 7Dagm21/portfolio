@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const FadeIn = ({ children, delay = 0, duration = 500, threshold = 0.1 }) => {
+const FadeIn = ({ children, delay = 0, duration = 500, threshold = 0.1 }: { 
+  children: React.ReactNode; 
+  delay?: number; 
+  duration?: number; 
+  threshold?: number 
+}) => {
     const [isVisible, setIsVisible] = useState(false);
     const elementRef = useRef(null);
 
