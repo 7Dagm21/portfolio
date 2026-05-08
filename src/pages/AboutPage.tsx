@@ -1,287 +1,217 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/useTheme";
-import { Code2, Zap, FileType, Palette, Server, Database } from "lucide-react";
+import FadeIn from "@/animations/FadeIn";
+import heroImage from "@/assets/hero.png";
+import { Link } from "react-router";
+import {
+  Camera, Code2, PenTool, Music, Gamepad2, Dumbbell, Globe, BookOpen, MapPin, CheckCircle,
+} from "lucide-react";
+import { ABOUT_BIO, EXPERIENCE, EDUCATION, INTERESTS, ABOUT_TECH_IDS } from "@/data/about";
+import { skills } from "@/data/skills";
 
-const techStack = [
-  { id: 1, name: "React", icon: Code2, color: "text-cyan-400" },
-  { id: 2, name: "Next.js", icon: Zap, color: "text-white" },
-  { id: 3, name: "TypeScript", icon: FileType, color: "text-blue-400" },
-  { id: 4, name: "Tailwind CSS", icon: Palette, color: "text-cyan-300" },
-  { id: 5, name: "Node.js", icon: Server, color: "text-green-400" },
-  { id: 6, name: "MongoDB", icon: Database, color: "text-green-500" },
-];
+const levelClass: Record<string, string> = {
+  Expert: "text-[#8DFF69] bg-[#8DFF69]/20 border-[#8DFF69]/30",
+  Advanced: "text-cyan-400 bg-cyan-500/20 border-cyan-500/30",
+  Intermediate: "text-emerald-400 bg-emerald-500/20 border-emerald-500/30",
+  Beginner: "text-red-400 bg-red-500/20 border-red-500/30",
+};
 
-export default function AboutPage() {
-  const { isDark } = useTheme();
+const levelClassLight: Record<string, string> = {
+  Expert: "text-emerald-700 bg-emerald-50 border-emerald-200",
+  Advanced: "text-cyan-700 bg-cyan-50 border-cyan-200",
+  Intermediate: "text-emerald-600 bg-emerald-50 border-emerald-200",
+  Beginner: "text-red-600 bg-red-50 border-red-200",
+};
+
+const iconMap: Record<string, React.FC<{ className?: string }>> = {
+  Camera, Code2, PenTool, Music, Gamepad2, Dumbbell, Globe, BookOpen,
+};
+
+const AboutPage = () => {
   const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
     const frame = requestAnimationFrame(() => setIsMounted(true));
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  const { isDark } = useTheme();
+  const pageClasses = isDark ? "relative overflow-hidden bg-slate-950 py-20 text-slate-100" : "relative overflow-hidden bg-slate-50 py-20 text-slate-900";
+  const cardClasses = isDark ? "rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300" : "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300";
+  const titleText = isDark ? "text-white" : "text-slate-900";
+  const textMuted = isDark ? "text-white/60" : "text-slate-600";
+
+  const techSkills = skills.filter(s => (ABOUT_TECH_IDS as unknown as number[]).includes(s.id));
+
+  const bioParagraphs = ABOUT_BIO.text.split("\n\n");
+
   return (
-    <div
-      className={`min-h-screen ${isDark ? "bg-[#070525]" : "bg-slate-50"} ${isDark ? "text-white" : "text-slate-900"} px-6 lg:px-20 py-10`}
-    >
-      {/* Top Badge */}
-      <div className="mb-8">
-        <div
-          className={`shimmer inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}
-        >
-          <span
-            className={`flex h-4 w-4 items-center justify-center text-sm ${isDark ? "text-primary" : "text-blue-600"}`}
-          >
-            ✨
-          </span>
-          <span
-            className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
-          >
-            Full-Stack Developer
-          </span>
-        </div>
+    <section className={pageClasses}>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className={`float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"}`} />
+        <div className={`float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"}`} />
       </div>
 
-      {/* Main Grid */}
-      <div className="grid lg:grid-cols-2 gap-10 items-start">
-        {/* LEFT SIDE */}
-        <div>
-          <h1
-            className={`text-4xl font-normal lg:text-5xl leading-tight mb-8 ${isDark ? "text-white" : "text-slate-900"}`}
-          >
-            Crafting Digital
-            <br />
-            Experiences That Matter
+      <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
+        {/* Section 1: Page Header — isMounted entrance */}
+        <div className={`mb-24 text-center transition-all duration-700 ease-out ${isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
+          <div className={`shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}>
+            <span className={`flex h-4 w-4 items-center justify-center text-sm ${isDark ? "text-primary" : "text-blue-600"}`}>
+              ✦
+            </span>
+            <span className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}>
+              About
+            </span>
+          </div>
+          <h1 className={`text-4xl lg:text-5xl font-normal ${titleText}`}>
+            About Me
           </h1>
-
-          <div
-            className={`space-y-6 text-lg leading-relaxed ${isDark ? "text-white/60" : "text-slate-600"}`}
-          >
-            <p>
-              I'm a passionate React developer with over 3 years of experience
-              building scalable and performant web applications.
-            </p>
-
-            <p>
-              I specialize in creating intuitive user interfaces using React,
-              Next.js, TypeScript, Tailwind CSS, and DaisyUI.
-            </p>
-
-            <p>
-              I focus on writing clean, maintainable code and creating smooth
-              user experiences with modern web technologies.
-            </p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 mt-14">
-            <div
-              className={`border-l-4 pl-4 ${isDark ? "border-white" : "border-slate-900"}`}
-            >
-              <h2
-                className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-              >
-                45+
-              </h2>
-
-              <p
-                className={`mt-2 ${isDark ? "text-white/60" : "text-slate-600"}`}
-              >
-                Happy Clients
-              </p>
-            </div>
-
-            <div
-              className={`border-l-4 pl-4 ${isDark ? "border-white" : "border-slate-900"}`}
-            >
-              <h2
-                className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-              >
-                2.5K+
-              </h2>
-
-              <p
-                className={`mt-2 ${isDark ? "text-white/60" : "text-slate-600"}`}
-              >
-                Code Commits
-              </p>
-            </div>
-
-            <div
-              className={`border-l-4 pl-4 ${isDark ? "border-white" : "border-slate-900"}`}
-            >
-              <h2
-                className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-              >
-                500+
-              </h2>
-
-              <p
-                className={`mt-2 ${isDark ? "text-white/60" : "text-slate-600"}`}
-              >
-                GitHub Stars
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="space-y-6">
-          {/* Big Card */}
-          <div
-            className={`group relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 ${isDark ? "border-white/10 bg-white/5 hover:bg-white/[0.07]" : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"}`}
-          >
-            <h2
-              className={`card-title text-2xl ${isDark ? "text-white" : "text-slate-900"}`}
-            >
-              Expertise
-            </h2>
-
-            <p className={`${isDark ? "text-white/60" : "text-slate-600"}`}>
-              Specialized in building scalable web applications with modern
-              frontend technologies and best practices.
-            </p>
-          </div>
-
-          {/* Small Cards */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <div
-              className={`group relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 ${isDark ? "border-white/10 bg-white/5 hover:bg-white/[0.07]" : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"}`}
-            >
-              <h2
-                className={`card-title ${isDark ? "text-white" : "text-slate-900"}`}
-              >
-                Clean Code
-              </h2>
-
-              <p className={`${isDark ? "text-white/60" : "text-slate-600"}`}>
-                Writing maintainable and scalable applications.
-              </p>
-            </div>
-
-            <div
-              className={`group relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 ${isDark ? "border-white/10 bg-white/5 hover:bg-white/[0.07]" : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"}`}
-            >
-              <h2
-                className={`card-title ${isDark ? "text-white" : "text-slate-900"}`}
-              >
-                Performance
-              </h2>
-
-              <p className={`${isDark ? "text-white/60" : "text-slate-600"}`}>
-                Optimizing applications for speed and efficiency.
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom Stats Card */}
-          <div
-            className={`group relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 ${isDark ? "border-white/10 bg-white/5 hover:bg-white/[0.07]" : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"}`}
-          >
-            <div className="grid grid-cols-3 text-center">
-              <div>
-                <h2
-                  className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-                >
-                  100%
-                </h2>
-
-                <p
-                  className={`${isDark ? "text-white/60" : "text-slate-600"}`}
-                >
-                  Client Satisfaction
-                </p>
-              </div>
-
-              <div>
-                <h2
-                  className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-                >
-                  24/7
-                </h2>
-
-                <p
-                  className={`${isDark ? "text-white/60" : "text-slate-600"}`}
-                >
-                  Support
-                </p>
-              </div>
-
-              <div>
-                <h2
-                  className={`text-4xl font-normal lg:text-5xl ${isDark ? "text-white" : "text-slate-900"}`}
-                >
-                  Fast
-                </h2>
-
-                <p
-                  className={`${isDark ? "text-white/60" : "text-slate-600"}`}
-                >
-                  Delivery
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tech Stack Section */}
-      <div
-        className={`mt-32 transition-all duration-700 ease-out ${
-          isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-        }`}
-      >
-        <div className="mb-12 text-center">
-          <h2
-            className={`mb-4 text-3xl font-normal lg:text-4xl ${isDark ? "text-white" : "text-slate-900"}`}
-          >
-            Tech Stack & Expertise
-          </h2>
-          <p
-            className={`text-base ${isDark ? "text-white/60" : "text-slate-600"}`}
-          >
-            Technologies I work with to build amazing products
+          <p className={`mx-auto mt-4 max-w-2xl text-lg ${textMuted}`}>
+            Learn more about my journey, skills, and what drives me.
           </p>
         </div>
 
-        {/* Scrollable Container */}
-        <div className="overflow-x-auto pb-4 scrollbar-hide flex justify-center">
-          <div className="flex gap-6 min-w-max px-4">
-            {techStack.map((tech, index) => {
-              const Icon = tech.icon;
-              return (
-                <div
-                  key={tech.id}
-                  className={`transition-all duration-700 ease-out ${
-                    isMounted
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-4 opacity-0"
-                  }`}
-                  style={{
-                    transitionDelay: isMounted ? `${index * 100}ms` : "0ms",
-                  }}
-                >
-                  <div
-                    className={`group relative flex flex-col items-center justify-center rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 min-w-max ${
-                      isDark
-                        ? "border-white/10 bg-white/5 hover:bg-white/[0.07]"
-                        : "border-slate-200 bg-white shadow-sm hover:bg-slate-50"
-                    }`}
-                  >
-                    <Icon
-                      className={`mb-3 h-10 w-10 ${tech.color}`}
-                      strokeWidth={1.5}
-                    />
-                    <span
-                      className={`text-center text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}
-                    >
-                      {tech.name}
-                    </span>
-                  </div>
+        {/* Section 2: Bio + Profile Image */}
+        <FadeIn delay={100}>
+          <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
+              {/* Left — Bio text (3 cols) */}
+              <div className="lg:col-span-3">
+                <h2 className={`text-2xl font-semibold ${titleText} mb-6`}>Who I Am</h2>
+                {bioParagraphs.map((paragraph, i) => (
+                  <p key={i} className={`text-base leading-7 ${textMuted} mb-4`}>{paragraph}</p>
+                ))}
+              </div>
+
+              {/* Right — Profile image (2 cols) */}
+              <div className="lg:col-span-2">
+                {/* Decorative blobs behind image */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                  <div className={`absolute -top-10 -left-10 h-40 w-40 rounded-full blur-3xl ${isDark ? "bg-primary/20" : "bg-blue-200/50"}`} />
+                  <div className={`absolute -bottom-10 -right-10 h-40 w-40 rounded-full blur-3xl ${isDark ? "bg-cyan-500/20" : "bg-violet-200/50"}`} />
                 </div>
-              );
-            })}
+                <div className={`relative rounded-3xl border p-2 shadow-xl ${
+                  isDark ? "border-white/10 bg-white/5" : "border-slate-200/70 bg-white"
+                }`}>
+                  <img src={heroImage} alt="Dagim Tesfaye" className="h-auto w-full rounded-2xl object-cover" />
+                </div>
+              </div>
+            </div>
           </div>
+        </FadeIn>
+
+        {/* Section 3: Tech Stack */}
+        <FadeIn delay={200}>
+          <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Technologies I Work With</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>A selection of tools and technologies in my daily toolkit</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {techSkills.map(skill => (
+                <span
+                  key={skill.id}
+                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                    isDark
+                      ? levelClass[skill.level] ?? "text-white/70 bg-white/5 border-white/10"
+                      : levelClassLight[skill.level] ?? "text-slate-600 bg-slate-50 border-slate-200"
+                  }`}
+                >
+                  {skill.name}
+                  <span className="ml-2 text-xs opacity-60">{skill.level}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Section 4: Experience Timeline */}
+        <FadeIn delay={300}>
+          <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Experience</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>A timeline of my professional journey</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {EXPERIENCE.map((exp, i) => (
+                <div key={i} className={cardClasses}>
+                  <div className="flex items-start gap-4 mb-3">
+                    <MapPin className={`mt-1 h-5 w-5 shrink-0 ${isDark ? "text-emerald-400" : "text-emerald-600"}`} />
+                    <div className="flex-1 flex flex-wrap items-start justify-between gap-2">
+                      <h3 className={`text-xl font-semibold ${titleText}`}>{exp.role}</h3>
+                      <span className={`rounded-full border px-3 py-0.5 text-xs font-medium whitespace-nowrap ${isDark ? "border-primary/30 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}>{exp.timeframe}</span>
+                    </div>
+                  </div>
+                  <p className={`text-sm leading-6 mb-4 ${textMuted}`}>{exp.description}</p>
+                  <ul className="space-y-2">
+                    {exp.highlights.map((hint, j) => (
+                      <li key={j} className="flex items-start gap-3 text-sm">
+                        <CheckCircle className={`mt-0.5 h-4 w-4 shrink-0 ${isDark ? "text-emerald-400" : "text-emerald-600"}`} />
+                        <span className={textMuted}>{hint}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Section 5: Education */}
+        <FadeIn delay={400}>
+          <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Education</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>My academic background</p>
+            <div className="space-y-6">
+              {EDUCATION.map((edu, i) => (
+                <div key={i} className={cardClasses}>
+                  <h3 className={`text-xl font-semibold ${titleText}`}>{edu.degree}</h3>
+                  <p className={`text-sm font-medium mt-1 ${isDark ? "text-primary" : "text-blue-600"}`}>{edu.school}</p>
+                  {edu.description && <p className={`text-sm leading-6 mt-3 ${textMuted}`}>{edu.description}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Section 6: Personal Interests */}
+        <FadeIn delay={500}>
+          <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Beyond the Code</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>When I'm not programming, here's what I'm into</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {INTERESTS.map((interest, i) => {
+                const Icon = iconMap[interest.icon];
+                return (
+                  <div key={i} className={`${cardClasses} text-center p-4`}>
+                    <div className="flex justify-center mb-3">
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${isDark ? "bg-white/10" : "bg-slate-100"}`}>
+                        {Icon && <Icon className={`h-5 w-5 ${isDark ? "text-primary" : "text-blue-600"}`} />}
+                      </div>
+                    </div>
+                    <h4 className={`text-sm font-semibold mb-1 ${titleText}`}>{interest.name}</h4>
+                    <p className={`text-xs leading-5 ${textMuted}`}>{interest.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Section 7: Call to Action — isMounted entrance like services.tsx */}
+        <div
+          className={`rounded-[32px] border p-10 text-center shadow-sm transition-all delay-300 duration-700 ease-out ${
+            isDark
+              ? "border-white/10 bg-primary/10 shadow-[0_20px_60px_rgba(59,130,246,0.15)]"
+              : "border-slate-200 bg-blue-50 shadow-[0_20px_60px_rgba(59,130,246,0.12)]"
+          } ${isMounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
+          <h2 className={`text-3xl font-semibold sm:text-4xl ${titleText}`}>
+            Let's Work Together
+          </h2>
+          <p className={`mx-auto mt-4 max-w-2xl text-base leading-7 sm:text-lg ${textMuted}`}>
+            Have a project in mind or just want to say hello? I'm always open to new opportunities and collaborations.
+          </p>
+          <Link
+            to="/contact"
+            className="btn btn-primary mt-8 rounded-full px-8"
+          >
+            Get in Touch
+          </Link>
         </div>
       </div>
     </div>

@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.sisyphus/*.json
+
+.sisyphus/
+*.tsbuildinfo
+
+# Environment variables
+/.env

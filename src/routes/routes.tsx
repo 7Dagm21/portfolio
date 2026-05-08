@@ -5,17 +5,15 @@ import {
   HomePage,
   AboutPage,
   SkillsPage,
-  ServicesPage,
   ContactPage,
   ProjectsPage,
-  TestimonialsPage,
+  ServicesPage,
 } from "@/pages";
-
 
 export const routes: RouteObject[] = [
   {
-        element: <RootLayout />,
-        children: [
+    element: <RootLayout />,
+    children: [
       {
         index: true,
         path: "/",
@@ -41,13 +39,8 @@ export const routes: RouteObject[] = [
         path: "/contact",
         element: <ContactPage />,
       },
-      {
-        path: "/testimonials",
-        element: <TestimonialsPage />,
-      },
     ],
   },
 ];
-
 
 export const router = createBrowserRouter(routes);
