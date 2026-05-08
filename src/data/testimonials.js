@@ -1,10 +1,10 @@
 // src/data/testimonials.js
-import weekfive from "../images/testimonials/weekfive.jpeg";
-import weekfour from "../images/testimonials/weekfour.jpeg";
-import weekone from "../images/testimonials/weekone.png";
-import weeksix from "../images/testimonials/weeksix.jpeg";
-import weekthree from "../images/testimonials/weekthree.jpeg";
-import weektwo from "../images/testimonials/weektwo.png";
+import weekfive from "../assets/hero.png";
+import weekfour from "../assets/hero.png";
+import weekone from "../assets/hero.png";
+import weeksix from "../assets/hero.png";
+import weekthree from "../assets/hero.png";
+import weektwo from "../assets/hero.png";
 
 export const testimonials = [
   {
