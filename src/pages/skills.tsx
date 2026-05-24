@@ -111,6 +111,9 @@ const Skills = () => {
 
   const tabs: ActiveCategory[] = ["All", "Frontend", "Backend", "Tools"];
 
+  const isFilteredView = activeCategory !== "All";
+  const cardsGridCols = isFilteredView ? "md:grid-cols-1" : "md:grid-cols-3";
+
   const pageClasses = isDark
     ? "relative overflow-hidden bg-slate-950 py-20 text-slate-100"
     : "relative overflow-hidden bg-slate-50 py-20 text-slate-900";
@@ -190,7 +193,12 @@ const Skills = () => {
               <button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  if (category !== "All") {
+                    setSelectedSkillId(skillCategories[category][0]?.id ?? 1);
+                  }
+                }}
                 className={`skills-card-hover rounded-full border px-4 py-2 text-sm font-medium hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/10 ${
                   activeCategory === category
                     ? isDark
@@ -213,10 +221,15 @@ const Skills = () => {
         </div>
 
         <div
-          className={`grid grid-cols-1 gap-8 ${showSelectedPanel ? "lg:grid-cols-[1.5fr_0.9fr]" : "lg:grid-cols-1"}`}
+          className={`grid grid-cols-1 items-start gap-8 ${
+            showSelectedPanel
+              ? "lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]"
+              : "lg:grid-cols-1"
+          }`}
         >
           <div
-            className={`grid grid-cols-1 gap-8 ${showSelectedPanel ? "md:grid-cols-2" : "md:grid-cols-3"}`}
+            key={activeCategory}
+            className={`grid grid-cols-1 gap-8 ${cardsGridCols}`}
           >
             {visibleCategoryEntries.map(
               ([category, categorySkills], categoryIndex) => (

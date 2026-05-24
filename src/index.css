@@ -5,11 +5,35 @@
     scroll-behavior: smooth;
   }
 
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href],
+  label[for],
+  select:not(:disabled),
+  summary,
+  input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  input[type="reset"]:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  input[type="file"]:not(:disabled),
+  .btn {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   /* Softer off-whites for light theme (less harsh than pure white / cool slate-50) */
   html[data-theme="light"] {
     --color-white: #f4f3f0;
     --color-slate-50: #eeedea;
     --color-slate-100: #e3e2de;
+    --color-blue-50: #eeedea;
     --color-base-100: #f4f3f0;
     --color-base-200: #eeedea;
     --color-base-300: #e3e2de;

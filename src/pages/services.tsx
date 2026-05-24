@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/useTheme";
 import { useTranslation } from "@/i18n/useTranslation";
 import GetInTouchButton from "@/components/ui/GetInTouchButton";
+import CtaPanel from "@/components/ui/CtaPanel";
 
 const ServicesPage = () => {
   const { isDark } = useTheme();
@@ -170,13 +171,7 @@ const ServicesPage = () => {
           ))}
         </div>
 
-        <div
-          className={`mt-16 rounded-[32px] border p-10 text-center shadow-sm transition-all delay-300 duration-700 ease-out ${
-            isDark
-              ? "border-white/10 bg-primary/10 shadow-[0_20px_60px_rgba(59,130,246,0.15)]"
-              : "border-slate-200 bg-blue-50 shadow-[0_20px_60px_rgba(59,130,246,0.12)]"
-          } ${isMounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-        >
+        <CtaPanel className="mt-16" isMounted={isMounted}>
           <h2 className={`text-3xl font-semibold sm:text-4xl ${titleText}`}>
             {t("services.ctaTitle")}
           </h2>
@@ -186,7 +181,7 @@ const ServicesPage = () => {
           <div className="mt-8 flex justify-center">
             <GetInTouchButton />
           </div>
-        </div>
+        </CtaPanel>
       </div>
     </section>
   );

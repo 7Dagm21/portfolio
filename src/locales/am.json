@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "ተጠቃሚ",
+    "brand": "Dagim",
     "theme": "ገጽታ",
     "toggleTheme": "የቀለም ገጽታ ቀይር",
     "toggleMenu": "አሰሳ ቀይር",
@@ -43,7 +43,7 @@
     "quickLinks": "ፈጣን አገናኞች",
     "contactSocial": "እውቂያ እና ማህበራዊ",
     "contactSocialHint": "በማህበራዊ መረቦች ያግኙን ወይም ፈጣን ኢሜይል ይላኩ።",
-    "copyright": "© {{year}} ተጠቃሚ። ሁሉም መብቶች የተጠበቁ ናቸው።",
+    "copyright": "© {{year}} Dagim። ሁሉም መብቶች የተጠበቁ ናቸው።",
     "builtWith": "በ React እና TypeScript ተገንብቷል።"
   },
   "home": {

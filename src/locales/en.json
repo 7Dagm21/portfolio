@@ -1,6 +1,6 @@
 {
   "common": {
-    "brand": "User",
+    "brand": "Dagim",
     "theme": "Theme",
     "toggleTheme": "Toggle color theme",
     "toggleMenu": "Toggle navigation menu",
@@ -43,7 +43,7 @@
     "quickLinks": "Quick Links",
     "contactSocial": "Contact & social",
     "contactSocialHint": "Connect through socials or send a quick email.",
-    "copyright": "© {{year}} User. All rights reserved.",
+    "copyright": "© {{year}} Dagim. All rights reserved.",
     "builtWith": "Built with React and TypeScript."
   },
   "home": {
