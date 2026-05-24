@@ -7,6 +7,7 @@ interface CategoryTabsProps {
   onCategoryChange: (category: string) => void;
   isDark: boolean;
   categoryIcons: Record<string, LucideIcon>;
+  categorySlugs?: readonly string[];
 }
 
 const CategoryTabs = ({
@@ -15,6 +16,7 @@ const CategoryTabs = ({
   onCategoryChange,
   isDark,
   categoryIcons,
+  categorySlugs,
 }: CategoryTabsProps) => {
   const getTabClasses = (category: string): string => {
     const isActive = activeCategory === category;
@@ -44,23 +46,30 @@ const CategoryTabs = ({
 
   return (
     <div className="flex flex-wrap justify-center gap-3 mb-16">
-      {categories.map((category) => (
-        <button
-          key={category}
-          onClick={() => onCategoryChange(category)}
-          className={getTabClasses(category)}
-        >
-          <div className={getBackgroundClasses(category)} />
-          <div className="relative flex items-center gap-2">
-            {createElement(categoryIcons[category], {
-              className: "w-4 h-4",
-            })}
-            <span>{category}</span>
-          </div>
+      {categories.map((category, index) => {
+        const iconKey = categorySlugs?.[index] ?? category;
+        const Icon = categoryIcons[iconKey];
 
-          {activeCategory === category && <div className={getGlowClasses()} />}
-        </button>
-      ))}
+        return (
+          <button
+            key={category}
+            onClick={() => onCategoryChange(category)}
+            className={getTabClasses(category)}
+          >
+            <div className={getBackgroundClasses(category)} />
+            <div className="relative flex items-center gap-2">
+              {Icon
+                ? createElement(Icon, {
+                    className: "w-4 h-4",
+                  })
+                : null}
+              <span>{category}</span>
+            </div>
+
+            {activeCategory === category && <div className={getGlowClasses()} />}
+          </button>
+        );
+      })}
     </div>
   );
 };

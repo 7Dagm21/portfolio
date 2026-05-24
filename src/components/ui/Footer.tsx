@@ -1,14 +1,14 @@
 import { Link } from "react-router";
 import { useTheme } from "@/context/useTheme";
+import { useTranslation } from "@/i18n/useTranslation";
 
 const quickLinks = [
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Skills", to: "/skills" },
-  { label: "Projects", to: "/projects" },
-  { label: "Services", to: "/services" },
-  { label: "Contact", to: "/contact" },
-  
+  { labelKey: "nav.home", to: "/" },
+  { labelKey: "nav.about", to: "/about" },
+  { labelKey: "nav.skills", to: "/skills" },
+  { labelKey: "nav.projects", to: "/projects" },
+  { labelKey: "nav.services", to: "/services" },
+  { labelKey: "nav.contact", to: "/contact" },
 ];
 
 const socialLinks = [
@@ -44,6 +44,7 @@ const socialLinks = [
 
 const Footer = () => {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <footer
@@ -72,17 +73,17 @@ const Footer = () => {
                 : "text-slate-900 hover:text-blue-600"
             }`}
           >
-            User
+            {t("common.brand")}
           </Link>
           <p
             className={`mt-4 max-w-sm text-sm leading-6 ${isDark ? "text-gray-400" : "text-slate-600"}`}
           >
-            Personal portfolio — projects, skills, and ways to get in touch.
+            {t("footer.tagline")}
           </p>
           <p
             className={`mt-4 text-sm ${isDark ? "text-gray-400" : "text-slate-600"}`}
           >
-            Email:{" "}
+            {t("footer.emailLabel")}{" "}
             <a
               href="mailto:user@example.com"
               className={`transition duration-300 ${
@@ -102,11 +103,11 @@ const Footer = () => {
               isDark ? "text-gray-200" : "text-slate-900"
             }`}
           >
-            Quick Links
+            {t("footer.quickLinks")}
           </h3>
           <ul className="mt-4 space-y-3">
             {quickLinks.map((link) => (
-              <li key={link.label}>
+              <li key={link.labelKey}>
                 <Link
                   to={link.to}
                   className={`inline-flex text-sm transition duration-300 hover:translate-x-1 ${
@@ -115,7 +116,7 @@ const Footer = () => {
                       : "text-slate-600 hover:text-blue-600"
                   }`}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
@@ -128,12 +129,12 @@ const Footer = () => {
               isDark ? "text-gray-200" : "text-slate-900"
             }`}
           >
-            Contact &amp; social
+            {t("footer.contactSocial")}
           </h3>
           <p
             className={`mt-4 text-sm ${isDark ? "text-gray-400" : "text-slate-600"}`}
           >
-            Connect through socials or send a quick email.
+            {t("footer.contactSocialHint")}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {socialLinks.map((item) => (
@@ -170,8 +171,8 @@ const Footer = () => {
             isDark ? "text-gray-500" : "text-slate-500"
           }`}
         >
-          <p>© {new Date().getFullYear()} User. All rights reserved.</p>
-          <p>Built with React and TypeScript.</p>
+          <p>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
+          <p>{t("footer.builtWith")}</p>
         </div>
       </div>
     </footer>

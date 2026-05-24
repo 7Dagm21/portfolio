@@ -1,37 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/useTheme";
-
-const services = [
-  {
-    title: "UI / UX Design",
-    description: "Clean, responsive layouts that feel polished on desktop and mobile.",
-    details: ["Wireframes & visual systems", "Mobile-first responsive design", "Micro interactions"],
-    icon: "🎨",
-  },
-  {
-    title: "Frontend Development",
-    description: "Build modern web experiences using React, TypeScript, and modern tooling.",
-    details: ["React + TypeScript", "Component architecture", "Performance optimized"],
-    icon: "⚛️",
-  },
-  {
-    title: "Performance Optimization",
-    description: "Improve load speed, accessibility, and user experience.",
-    details: ["Load speed improvements", "SEO optimization", "Accessibility compliance"],
-    icon: "⚡",
-  },
-  {
-    title: "Landing Page Creation",
-    description: "Create high-converting landing pages with clear messaging.",
-    details: ["Conversion-focused design", "Brand alignment", "Fast deployment"],
-    icon: "🚀",
-  },
-];
+import { useTranslation } from "@/i18n/useTranslation";
+import GetInTouchButton from "@/components/ui/GetInTouchButton";
 
 const ServicesPage = () => {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+
+  const services = useMemo(
+    () => [
+      {
+        title: t("services.s1Title"),
+        description: t("services.s1Desc"),
+        details: [t("services.s1d1"), t("services.s1d2"), t("services.s1d3")],
+        icon: "🎨",
+      },
+      {
+        title: t("services.s2Title"),
+        description: t("services.s2Desc"),
+        details: [t("services.s2d1"), t("services.s2d2"), t("services.s2d3")],
+        icon: "⚛️",
+      },
+      {
+        title: t("services.s3Title"),
+        description: t("services.s3Desc"),
+        details: [t("services.s3d1"), t("services.s3d2"), t("services.s3d3")],
+        icon: "⚡",
+      },
+      {
+        title: t("services.s4Title"),
+        description: t("services.s4Desc"),
+        details: [t("services.s4d1"), t("services.s4d2"), t("services.s4d3")],
+        icon: "🚀",
+      },
+    ],
+    [t],
+  );
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setIsMounted(true));
@@ -74,15 +80,15 @@ const ServicesPage = () => {
             <span
               className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
             >
-              Services
+              {t("services.badge")}
             </span>
           </div>
 
           <h2 className={`mb-4 text-4xl font-normal lg:text-5xl ${titleText}`}>
-            What I can do for your next project
+            {t("services.title")}
           </h2>
           <p className={`mx-auto max-w-2xl text-lg ${textMuted}`}>
-            From polished interface design to fast frontend implementation, I deliver user-focused solutions.
+            {t("services.subtitle")}
           </p>
         </div>
 
@@ -172,14 +178,14 @@ const ServicesPage = () => {
           } ${isMounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         >
           <h2 className={`text-3xl font-semibold sm:text-4xl ${titleText}`}>
-            Ready to start your project?
+            {t("services.ctaTitle")}
           </h2>
           <p className={`mx-auto mt-4 max-w-2xl text-base leading-7 sm:text-lg ${textMuted}`}>
-            Let's discuss how we can bring your ideas to life with quality and speed.
+            {t("services.ctaBody")}
           </p>
-          <p className={`mt-6 text-sm font-medium uppercase tracking-[0.35em] ${isDark ? "text-primary" : "text-blue-700"}`}>
-            Get in touch
-          </p>
+          <div className="mt-8 flex justify-center">
+            <GetInTouchButton />
+          </div>
         </div>
       </div>
     </section>

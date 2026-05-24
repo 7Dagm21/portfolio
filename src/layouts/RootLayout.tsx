@@ -1,5 +1,7 @@
 import { Outlet } from "react-router";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Footer, Header } from "@/components/ui";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { useTheme } from "@/context/useTheme";
 
@@ -12,6 +14,7 @@ const LayoutShell = () => {
         isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"
       }`}
     >
+      <ScrollToTop />
       <Header />
       <main className="flex-1 w-full">
         <Outlet />
@@ -23,9 +26,11 @@ const LayoutShell = () => {
 
 const RootLayout = () => {
   return (
-    <ThemeProvider>
-      <LayoutShell />
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <LayoutShell />
+      </ThemeProvider>
+    </LanguageProvider>
   );
 };
 

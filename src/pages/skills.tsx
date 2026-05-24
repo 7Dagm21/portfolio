@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/useTheme";
+import { useTranslation } from "@/i18n/useTranslation";
 import { skills, type SkillItem, type SkillLevel } from "../data/skills";
 
 type SkillMap = Record<string, SkillItem[]>;
@@ -55,8 +56,16 @@ const categoryBadgeClass: Record<string, string> = {
 
 const getIconLabel = (iconName: string) => iconLabel[iconName] ?? "<>";
 
+const categoryLabelKeys: Record<string, string> = {
+  All: "skills.tabAll",
+  Frontend: "skills.tabFrontend",
+  Backend: "skills.tabBackend",
+  Tools: "skills.tabTools",
+};
+
 const Skills = () => {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState<ActiveCategory>("All");
   const [selectedSkillId, setSelectedSkillId] = useState<number>(
     skills[0]?.id ?? 1,
@@ -118,6 +127,10 @@ const Skills = () => {
   const titleText = isDark ? "text-white" : "text-slate-900";
   const dividerClass = isDark ? "border-white/10" : "border-slate-200";
 
+  const translateLevel = (level: SkillLevel) => t(`levels.${level}`);
+  const translateCategory = (category: string) =>
+    t(categoryLabelKeys[category] ?? category);
+
   return (
     <section id="skills" className={pageClasses}>
       <div className="skills-grid-overlay pointer-events-none absolute inset-0 overflow-hidden opacity-40" />
@@ -150,16 +163,15 @@ const Skills = () => {
             <span
               className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
             >
-              My Expertise
+              {t("skills.badge")}
             </span>
           </div>
 
           <h2 className={`mb-4 text-4xl font-normal lg:text-5xl ${titleText}`}>
-            Skills & Technologies
+            {t("skills.title")}
           </h2>
           <p className={`mx-auto max-w-2xl text-lg ${textMuted}`}>
-            A comprehensive overview of my technical skills and proficiency
-            level.
+            {t("skills.subtitle")}
           </p>
         </div>
 
@@ -189,7 +201,7 @@ const Skills = () => {
                       : "border-slate-200 bg-white text-slate-600"
                 }`}
               >
-                {category}
+                {translateCategory(category)}
                 <span
                   className={`ml-2 text-xs ${isDark ? "text-white/40" : "text-slate-400"}`}
                 >
@@ -221,12 +233,12 @@ const Skills = () => {
                   >
                     <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
                     <h3 className={`text-xl font-medium ${titleText}`}>
-                      {category}
+                      {translateCategory(category)}
                     </h3>
                     <span
                       className={`ml-auto rounded-full border px-3 py-1 text-xs font-medium ${categoryBadgeClass[category] ?? (isDark ? "border-white/10 bg-white/5 text-white/60" : "border-slate-200 bg-slate-100 text-slate-500")}`}
                     >
-                      {categorySkills.length} skills
+                      {t("common.skillsCount", { count: categorySkills.length })}
                     </span>
                   </div>
 
@@ -277,7 +289,7 @@ const Skills = () => {
                             <span
                               className={`rounded-full border px-2 py-1 text-xs ${levelClass[skill.level]}`}
                             >
-                              {skill.level}
+                              {translateLevel(skill.level)}
                             </span>
                           </button>
 
@@ -315,7 +327,7 @@ const Skills = () => {
               >
                 <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
                 <h3 className={`text-xl font-medium ${titleText}`}>
-                  Selected Skill
+                  {t("skills.selectedSkill")}
                 </h3>
               </div>
 
@@ -326,7 +338,7 @@ const Skills = () => {
                       <p
                         className={`text-sm ${isDark ? "text-white/50" : "text-slate-500"}`}
                       >
-                        Active skill
+                        {t("skills.activeSkill")}
                       </p>
                       <h4
                         className={`mt-1 text-2xl font-semibold ${titleText}`}
@@ -337,7 +349,7 @@ const Skills = () => {
                     <span
                       className={`rounded-full border px-3 py-1 text-xs font-medium ${levelClass[selectedSkill.level]}`}
                     >
-                      {selectedSkill.level}
+                      {translateLevel(selectedSkill.level)}
                     </span>
                   </div>
 
@@ -345,7 +357,7 @@ const Skills = () => {
                     <span
                       className={`rounded-full border px-3 py-1 text-xs ${isDark ? "border-white/10 bg-white/5 text-white/70" : "border-slate-200 bg-slate-50 text-slate-600"}`}
                     >
-                      {selectedSkillCategory}
+                      {translateCategory(selectedSkillCategory)}
                     </span>
                     <span
                       className={`rounded-full border px-3 py-1 text-xs ${isDark ? "border-white/10 bg-white/5 text-white/70" : "border-slate-200 bg-slate-50 text-slate-600"}`}
@@ -355,7 +367,7 @@ const Skills = () => {
                     <span
                       className={`rounded-full border px-3 py-1 text-xs ${isDark ? "border-white/10 bg-white/5 text-white/70" : "border-slate-200 bg-slate-50 text-slate-600"}`}
                     >
-                      {getIconLabel(selectedSkill.icon)} badge
+                      {getIconLabel(selectedSkill.icon)} {t("common.badge")}
                     </span>
                   </div>
 
@@ -364,7 +376,7 @@ const Skills = () => {
                       <div
                         className={`mb-2 flex items-center justify-between text-sm ${isDark ? "text-white/60" : "text-slate-500"}`}
                       >
-                        <span>Proficiency</span>
+                        <span>{t("skills.proficiency")}</span>
                         <span>{levelWidth[selectedSkill.level]}%</span>
                       </div>
                       <div
@@ -380,9 +392,7 @@ const Skills = () => {
                     </div>
 
                     <p className={`text-sm leading-6 ${textMuted}`}>
-                      Click any skill card to update this preview. The active
-                      state highlights the selected skill and animates the
-                      progress bar.
+                      {t("skills.panelHint")}
                     </p>
                   </div>
                 </>

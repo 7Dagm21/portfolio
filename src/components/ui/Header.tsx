@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
+import { scrollToTop } from "@/components/ScrollToTop";
 import { useTheme } from "@/context/useTheme";
+import { useTranslation } from "@/i18n/useTranslation";
 
 const navItems = [
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Skills", to: "/skills" },
-  { label: "Projects", to: "/projects" },
-  { label: "Services", to: "/services" },
-  { label: "Contact", to: "/contact" },
+  { labelKey: "nav.home", to: "/" },
+  { labelKey: "nav.about", to: "/about" },
+  { labelKey: "nav.skills", to: "/skills" },
+  { labelKey: "nav.projects", to: "/projects" },
+  { labelKey: "nav.services", to: "/services" },
+  { labelKey: "nav.contact", to: "/contact" },
 ];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { t, isAmharic, toggleLocale } = useTranslation();
 
   const headerClasses = isDark
     ? "sticky top-0 z-50 border-b border-blue-500/20 bg-[#0A0A0A]/90 shadow-[0_0_40px_rgba(37,99,235,0.08)] backdrop-blur-xl"
@@ -37,29 +40,32 @@ const Header = () => {
     ? "inline-flex h-11 w-11 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300 transition duration-300 hover:bg-blue-500/20 md:hidden"
     : "inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 transition duration-300 hover:bg-slate-200 md:hidden";
 
-  const themeButtonClasses = isDark
+  const iconButtonClasses = isDark
     ? "inline-flex h-11 w-11 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300 transition duration-300 hover:bg-blue-500/20"
     : "inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 transition duration-300 hover:bg-slate-200";
+
+  const languageButtonClasses = `${iconButtonClasses} min-w-11 px-2 text-xs font-semibold tracking-wide`;
 
   return (
     <header className={headerClasses}>
       <div className="mx-auto flex h-20 w-full max-w-400 items-center justify-between px-4 sm:px-6 lg:px-10">
-        <Link to="/" className={brandClasses}>
-          User
+        <Link to="/" className={brandClasses} onClick={scrollToTop}>
+          {t("common.brand")}
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex">
           {navItems.map((item) => (
             <NavLink
-              key={item.label}
+              key={item.labelKey}
               to={item.to}
+              onClick={scrollToTop}
               className={({ isActive }) =>
                 `rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive ? navItemClasses.active : navItemClasses.inactive
                 }`
               }
             >
-              {item.label}
+              {t(item.labelKey)}
             </NavLink>
           ))}
         </nav>
@@ -67,8 +73,8 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            aria-label="Toggle color theme"
-            className={themeButtonClasses}
+            aria-label={t("common.toggleTheme")}
+            className={iconButtonClasses}
             onClick={toggleTheme}
           >
             <svg
@@ -97,7 +103,20 @@ const Header = () => {
 
           <button
             type="button"
-            aria-label="Toggle navigation menu"
+            aria-label={
+              isAmharic
+                ? t("common.toggleLanguageAm")
+                : t("common.toggleLanguage")
+            }
+            className={languageButtonClasses}
+            onClick={toggleLocale}
+          >
+            {t("common.languageButton")}
+          </button>
+
+          <button
+            type="button"
+            aria-label={t("common.toggleMenu")}
             className={menuButtonClasses}
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
@@ -138,11 +157,11 @@ const Header = () => {
           <span
             className={`text-sm font-medium ${isDark ? "text-white/60" : "text-slate-500"}`}
           >
-            Theme
+            {t("common.theme")}
           </span>
           <button
             type="button"
-            aria-label="Toggle color theme"
+            aria-label={t("common.toggleTheme")}
             className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border transition duration-300 md:hidden ${
               isDark
                 ? "border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20"
@@ -178,16 +197,19 @@ const Header = () => {
         <nav className="mx-auto flex w-full max-w-400 flex-col gap-1 py-2 px-4 sm:px-6 lg:px-10">
           {navItems.map((item) => (
             <NavLink
-              key={item.label}
+              key={item.labelKey}
               to={item.to}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                setIsMenuOpen(false);
+                scrollToTop();
+              }}
               className={({ isActive }) =>
                 `rounded-xl px-4 py-3 text-sm font-medium transition duration-300 ${
                   isActive ? navItemClasses.active : navItemClasses.inactive
                 }`
               }
             >
-              {item.label}
+              {t(item.labelKey)}
             </NavLink>
           ))}
         </nav>

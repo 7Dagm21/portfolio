@@ -147,7 +147,7 @@ const Testimonials = () => {
 
                         <button
                             onClick={prevTestimonial}
-                            className="flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 lg:-translate-x-4 items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 z-10"
+                            className="flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-[calc(100%+0.75rem)] lg:-translate-x-[calc(100%+1.25rem)] items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 z-10"
                             aria-label="Previous Testimonial"
                         >
                             <ChevronLeft className="w-6 h-6 text-white" />
@@ -155,7 +155,7 @@ const Testimonials = () => {
 
                         <button
                             onClick={nextTestimonial}
-                            className="flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 lg:translate-x-4 items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 z-10"
+                            className="flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-[calc(100%+0.75rem)] lg:translate-x-[calc(100%+1.25rem)] items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 z-10"
                             aria-label="Next Testimonial"
                         >
                             <ChevronRight className="w-6 h-6 text-white" />

@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/useTheme";
+import { useTranslation } from "@/i18n/useTranslation";
 import FadeIn from "@/animations/FadeIn";
 import heroImage from "@/assets/hero.png";
-import { Link } from "react-router";
+import GetInTouchButton from "@/components/ui/GetInTouchButton";
 import {
   Camera, Code2, PenTool, Music, Gamepad2, Dumbbell, Globe, BookOpen, MapPin, CheckCircle,
 } from "lucide-react";
-import { ABOUT_BIO, EXPERIENCE, EDUCATION, INTERESTS, ABOUT_TECH_IDS } from "@/data/about";
+import { ABOUT_TECH_IDS } from "@/data/about";
 import { skills } from "@/data/skills";
+import type { SkillLevel } from "@/data/skills";
 
 const levelClass: Record<string, string> = {
   Expert: "text-[#8DFF69] bg-[#8DFF69]/20 border-[#8DFF69]/30",
@@ -35,6 +37,61 @@ const AboutPage = () => {
   }, []);
 
   const { isDark } = useTheme();
+  const { t } = useTranslation();
+
+  const bioParagraphs = useMemo(
+    () => [t("about.bio1"), t("about.bio2"), t("about.bio3")],
+    [t],
+  );
+
+  const experience = useMemo(
+    () => [
+      {
+        role: t("about.exp1Role"),
+        timeframe: t("about.exp1Time"),
+        description: t("about.exp1Desc"),
+        highlights: [
+          t("about.exp1h1"),
+          t("about.exp1h2"),
+          t("about.exp1h3"),
+          t("about.exp1h4"),
+        ],
+      },
+      {
+        role: t("about.exp2Role"),
+        timeframe: t("about.exp2Time"),
+        description: t("about.exp2Desc"),
+        highlights: [t("about.exp2h1"), t("about.exp2h2"), t("about.exp2h3")],
+      },
+    ],
+    [t],
+  );
+
+  const education = useMemo(
+    () => [
+      {
+        degree: t("about.eduDegree"),
+        school: t("about.eduSchool"),
+        description: t("about.eduDesc"),
+      },
+    ],
+    [t],
+  );
+
+  const interests = useMemo(
+    () => [
+      { name: t("about.int1Name"), icon: "Camera", description: t("about.int1Desc") },
+      { name: t("about.int2Name"), icon: "Code2", description: t("about.int2Desc") },
+      { name: t("about.int3Name"), icon: "PenTool", description: t("about.int3Desc") },
+      { name: t("about.int4Name"), icon: "Music", description: t("about.int4Desc") },
+      { name: t("about.int5Name"), icon: "Gamepad2", description: t("about.int5Desc") },
+      { name: t("about.int6Name"), icon: "Dumbbell", description: t("about.int6Desc") },
+      { name: t("about.int7Name"), icon: "Globe", description: t("about.int7Desc") },
+      { name: t("about.int8Name"), icon: "BookOpen", description: t("about.int8Desc") },
+    ],
+    [t],
+  );
+
   const pageClasses = isDark ? "relative overflow-hidden bg-slate-950 py-20 text-slate-100" : "relative overflow-hidden bg-slate-50 py-20 text-slate-900";
   const cardClasses = isDark ? "rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300" : "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300";
   const titleText = isDark ? "text-white" : "text-slate-900";
@@ -42,7 +99,7 @@ const AboutPage = () => {
 
   const techSkills = skills.filter(s => (ABOUT_TECH_IDS as unknown as number[]).includes(s.id));
 
-  const bioParagraphs = ABOUT_BIO.text.split("\n\n");
+  const translateLevel = (level: SkillLevel) => t(`levels.${level}`);
 
   return (
     <section className={pageClasses}>
@@ -52,39 +109,34 @@ const AboutPage = () => {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10">
-        {/* Section 1: Page Header — isMounted entrance */}
         <div className={`mb-24 text-center transition-all duration-700 ease-out ${isMounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
           <div className={`shimmer mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-primary/30 bg-gradient-to-r from-primary/10 via-primary/15 to-primary/10" : "border-blue-200 bg-gradient-to-r from-blue-50 via-white to-blue-50"}`}>
             <span className={`flex h-4 w-4 items-center justify-center text-sm ${isDark ? "text-primary" : "text-blue-600"}`}>
               ✦
             </span>
             <span className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}>
-              About
+              {t("about.badge")}
             </span>
           </div>
           <h1 className={`text-4xl lg:text-5xl font-normal ${titleText}`}>
-            About Me
+            {t("about.title")}
           </h1>
           <p className={`mx-auto mt-4 max-w-2xl text-lg ${textMuted}`}>
-            Learn more about my journey, skills, and what drives me.
+            {t("about.subtitle")}
           </p>
         </div>
 
-        {/* Section 2: Bio + Profile Image */}
         <FadeIn delay={100}>
           <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
-              {/* Left — Bio text (3 cols) */}
               <div className="lg:col-span-3">
-                <h2 className={`text-2xl font-semibold ${titleText} mb-6`}>Who I Am</h2>
+                <h2 className={`text-2xl font-semibold ${titleText} mb-6`}>{t("about.whoIAm")}</h2>
                 {bioParagraphs.map((paragraph, i) => (
                   <p key={i} className={`text-base leading-7 ${textMuted} mb-4`}>{paragraph}</p>
                 ))}
               </div>
 
-              {/* Right — Profile image (2 cols) */}
               <div className="lg:col-span-2">
-                {/* Decorative blobs behind image */}
                 <div className="pointer-events-none absolute inset-0 overflow-hidden">
                   <div className={`absolute -top-10 -left-10 h-40 w-40 rounded-full blur-3xl ${isDark ? "bg-primary/20" : "bg-blue-200/50"}`} />
                   <div className={`absolute -bottom-10 -right-10 h-40 w-40 rounded-full blur-3xl ${isDark ? "bg-cyan-500/20" : "bg-violet-200/50"}`} />
@@ -92,18 +144,17 @@ const AboutPage = () => {
                 <div className={`relative rounded-3xl border p-2 shadow-xl ${
                   isDark ? "border-white/10 bg-white/5" : "border-slate-200/70 bg-white"
                 }`}>
-                  <img src={heroImage} alt="Dagim Tesfaye" className="h-auto w-full rounded-2xl object-cover" />
+                  <img src={heroImage} alt={t("home.name")} className="h-auto w-full rounded-2xl object-cover" />
                 </div>
               </div>
             </div>
           </div>
         </FadeIn>
 
-        {/* Section 3: Tech Stack */}
         <FadeIn delay={200}>
           <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
-            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Technologies I Work With</h2>
-            <p className={`mb-8 text-base ${textMuted}`}>A selection of tools and technologies in my daily toolkit</p>
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>{t("about.techTitle")}</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>{t("about.techSubtitle")}</p>
             <div className="flex flex-wrap justify-center gap-3">
               {techSkills.map(skill => (
                 <span
@@ -115,20 +166,19 @@ const AboutPage = () => {
                   }`}
                 >
                   {skill.name}
-                  <span className="ml-2 text-xs opacity-60">{skill.level}</span>
+                  <span className="ml-2 text-xs opacity-60">{translateLevel(skill.level)}</span>
                 </span>
               ))}
             </div>
           </div>
         </FadeIn>
 
-        {/* Section 4: Experience Timeline */}
         <FadeIn delay={300}>
           <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
-            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Experience</h2>
-            <p className={`mb-8 text-base ${textMuted}`}>A timeline of my professional journey</p>
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>{t("about.experienceTitle")}</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>{t("about.experienceSubtitle")}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {EXPERIENCE.map((exp, i) => (
+              {experience.map((exp, i) => (
                 <div key={i} className={cardClasses}>
                   <div className="flex items-start gap-4 mb-3">
                     <MapPin className={`mt-1 h-5 w-5 shrink-0 ${isDark ? "text-emerald-400" : "text-emerald-600"}`} />
@@ -152,13 +202,12 @@ const AboutPage = () => {
           </div>
         </FadeIn>
 
-        {/* Section 5: Education */}
         <FadeIn delay={400}>
           <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
-            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Education</h2>
-            <p className={`mb-8 text-base ${textMuted}`}>My academic background</p>
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>{t("about.educationTitle")}</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>{t("about.educationSubtitle")}</p>
             <div className="space-y-6">
-              {EDUCATION.map((edu, i) => (
+              {education.map((edu, i) => (
                 <div key={i} className={cardClasses}>
                   <h3 className={`text-xl font-semibold ${titleText}`}>{edu.degree}</h3>
                   <p className={`text-sm font-medium mt-1 ${isDark ? "text-primary" : "text-blue-600"}`}>{edu.school}</p>
@@ -169,13 +218,12 @@ const AboutPage = () => {
           </div>
         </FadeIn>
 
-        {/* Section 6: Personal Interests */}
         <FadeIn delay={500}>
           <div className="mx-auto w-full max-w-400 px-4 sm:px-6 lg:px-10 mb-24">
-            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>Beyond the Code</h2>
-            <p className={`mb-8 text-base ${textMuted}`}>When I'm not programming, here's what I'm into</p>
+            <h2 className={`text-2xl font-semibold ${titleText} mb-4`}>{t("about.interestsTitle")}</h2>
+            <p className={`mb-8 text-base ${textMuted}`}>{t("about.interestsSubtitle")}</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {INTERESTS.map((interest, i) => {
+              {interests.map((interest, i) => {
                 const Icon = iconMap[interest.icon];
                 return (
                   <div key={i} className={`${cardClasses} text-center p-4`}>
@@ -193,7 +241,6 @@ const AboutPage = () => {
           </div>
         </FadeIn>
 
-        {/* Section 7: Call to Action — isMounted entrance like services.tsx */}
         <div
           className={`rounded-[32px] border p-10 text-center shadow-sm transition-all delay-300 duration-700 ease-out ${
             isDark
@@ -201,19 +248,16 @@ const AboutPage = () => {
               : "border-slate-200 bg-blue-50 shadow-[0_20px_60px_rgba(59,130,246,0.12)]"
           } ${isMounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
           <h2 className={`text-3xl font-semibold sm:text-4xl ${titleText}`}>
-            Let's Work Together
+            {t("about.ctaTitle")}
           </h2>
           <p className={`mx-auto mt-4 max-w-2xl text-base leading-7 sm:text-lg ${textMuted}`}>
-            Have a project in mind or just want to say hello? I'm always open to new opportunities and collaborations.
+            {t("about.ctaBody")}
           </p>
-          <Link
-            to="/contact"
-            className="btn btn-primary mt-8 rounded-full px-8"
-          >
-            Get in Touch
-          </Link>
+          <GetInTouchButton className="mt-8" />
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default AboutPage;

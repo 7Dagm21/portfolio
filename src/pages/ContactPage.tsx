@@ -1,35 +1,46 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { useTheme } from "@/context/useTheme";
-
-const CONTACT_CHANNELS = [
-  {
-    title: "Email",
-    value: "dagti@gmail.com",
-    href: "mailto:dagti@gmail.com",
-    description: "Best for project inquiries and collaboration.",
-  },
-  {
-    title: "LinkedIn",
-    value: "linkedin.com/in/dagti",
-    href: "https://www.linkedin.com/in/dagti",
-    description: "For professional networking and opportunities.",
-  },
-  {
-    title: "GitHub",
-    value: "github.com/dagti",
-    href: "https://github.com/dagti",
-    description: "Explore code samples and open-source work.",
-  },
-] as const;
+import { useTranslation } from "@/i18n/useTranslation";
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const { isDark } = useTheme();
+  const { t } = useTranslation();
+
+  const contactChannels = useMemo(
+    () => [
+      {
+        title: t("contact.emailTitle"),
+        value: "dagti@gmail.com",
+        href: "mailto:dagti@gmail.com",
+        description: t("contact.emailDesc"),
+      },
+      {
+        title: t("contact.linkedinTitle"),
+        value: "linkedin.com/in/dagti",
+        href: "https://www.linkedin.com/in/dagti",
+        description: t("contact.linkedinDesc"),
+      },
+      {
+        title: t("contact.githubTitle"),
+        value: "github.com/dagti",
+        href: "https://github.com/dagti",
+        description: t("contact.githubDesc"),
+      },
+    ],
+    [t],
+  );
 
   const pageClasses = isDark
-    ? "relative overflow-hidden bg-black py-20 text-white"
+    ? "relative overflow-hidden bg-slate-950 py-20 text-slate-100"
     : "relative overflow-hidden bg-slate-50 py-20 text-slate-900";
+
+  const primaryButtonClasses = `btn rounded-full border px-8 py-3 font-medium transition-all duration-300 ${
+    isDark
+      ? "border-white/20 text-white hover:bg-white/10"
+      : "border-slate-300 text-slate-900 hover:bg-slate-100"
+  }`;
 
   const cardClasses = isDark
     ? "group relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-primary/30"
@@ -48,7 +59,7 @@ const ContactPage = () => {
     ? "w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-primary/50"
     : "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-primary/50 focus:bg-white";
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -58,7 +69,9 @@ const ContactPage = () => {
     const details = String(formData.get("details") ?? "").trim();
 
     const subject = encodeURIComponent(
-      `Project inquiry from ${name || "Website visitor"}`,
+      t("contact.mailSubject", {
+        name: name || t("contact.mailVisitor"),
+      }),
     );
     const body = encodeURIComponent(
       [
@@ -66,12 +79,12 @@ const ContactPage = () => {
         `Email: ${email}`,
         `Project: ${project}`,
         "",
-        "Project details:",
+        t("contact.mailDetails"),
         details,
       ].join("\n"),
     );
 
-    window.open(`mailto:dagti@gmail.com?subject=${subject}&body=${body}`, "_blank");
+    window.location.href = `mailto:dagti@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -85,13 +98,13 @@ const ContactPage = () => {
     <section id="contact" className={pageClasses}>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
-          className={`absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl opacity-50 ${
-            isDark ? "bg-primary/10" : "bg-blue-200/40"
+          className={`float absolute left-0 top-1/4 h-96 w-96 rounded-full blur-3xl ${
+            isDark ? "bg-primary/10 opacity-50" : "bg-blue-200/40 opacity-60"
           }`}
         />
         <div
-          className={`absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl opacity-50 ${
-            isDark ? "bg-primary/10" : "bg-violet-200/40"
+          className={`float-slow absolute bottom-1/4 right-0 h-96 w-96 rounded-full blur-3xl ${
+            isDark ? "bg-primary/10 opacity-50" : "bg-violet-200/40 opacity-60"
           }`}
         />
       </div>
@@ -110,16 +123,14 @@ const ContactPage = () => {
             <span
               className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
             >
-              Get In Touch
+              {t("common.getInTouch")}
             </span>
           </div>
           <h1 className={`mb-4 text-4xl font-normal lg:text-5xl ${titleText}`}>
-            Let&apos;s Build Something Useful
+            {t("contact.title")}
           </h1>
           <p className={`mx-auto max-w-2xl text-lg ${mutedText}`}>
-            I build clean, reliable web products for teams and founders. Share
-            your project and I will reply with a practical plan, timeline, and
-            next steps.
+            {t("contact.subtitle")}
           </p>
         </div>
 
@@ -130,12 +141,12 @@ const ContactPage = () => {
             >
               <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
               <h2 className={`text-xl font-medium ${titleText}`}>
-                Project Brief
+                {t("contact.formTitle")}
               </h2>
             </div>
 
             <p id="contact-form-help" className={`mb-5 text-sm ${mutedText}`}>
-              Include your goals, timeline, and what success looks like.
+              {t("contact.formHint")}
             </p>
 
             <form
@@ -146,7 +157,7 @@ const ContactPage = () => {
             >
               <label className="form-control sm:col-span-1">
                 <span className={`mb-2 text-sm font-medium ${labelClass}`}>
-                  Your Name
+                  {t("contact.nameLabel")}
                 </span>
                 <input
                   id="contact-name"
@@ -154,14 +165,14 @@ const ContactPage = () => {
                   type="text"
                   required
                   autoComplete="name"
-                  placeholder="Jane Doe"
+                  placeholder={t("contact.namePlaceholder")}
                   className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-1">
                 <span className={`mb-2 text-sm font-medium ${labelClass}`}>
-                  Email
+                  {t("contact.emailLabel")}
                 </span>
                 <input
                   id="contact-email"
@@ -169,35 +180,35 @@ const ContactPage = () => {
                   type="email"
                   required
                   autoComplete="email"
-                  placeholder="jane@company.com"
+                  placeholder={t("contact.emailPlaceholder")}
                   className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-2">
                 <span className={`mb-2 text-sm font-medium ${labelClass}`}>
-                  What are you building?
+                  {t("contact.projectLabel")}
                 </span>
                 <input
                   id="contact-project"
                   name="project"
                   type="text"
                   required
-                  placeholder="Developer portfolio, product dashboard, SaaS landing page"
+                  placeholder={t("contact.projectPlaceholder")}
                   className={inputClasses}
                 />
               </label>
 
               <label className="form-control sm:col-span-2">
                 <span className={`mb-2 text-sm font-medium ${labelClass}`}>
-                  Project Details
+                  {t("contact.detailsLabel")}
                 </span>
                 <textarea
                   id="contact-details"
                   name="details"
                   required
                   rows={5}
-                  placeholder="Tell me what you need, who it is for, and your ideal launch window."
+                  placeholder={t("contact.detailsPlaceholder")}
                   className={inputClasses}
                 />
               </label>
@@ -205,12 +216,12 @@ const ContactPage = () => {
               <div className="mt-2 flex flex-wrap items-center gap-3 sm:col-span-2">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded-full px-6"
+                  className={primaryButtonClasses}
                 >
-                  {submitted ? "Message Sent" : "Send Message"}
+                  {submitted ? t("contact.messageSent") : t("contact.sendMessage")}
                 </button>
                 <span className={`text-sm ${softText}`}>
-                  Typical response: within 24 hours
+                  {t("contact.responseTime")}
                 </span>
               </div>
             </form>
@@ -221,8 +232,7 @@ const ContactPage = () => {
                 aria-live="polite"
                 className={`mt-5 rounded-xl border px-4 py-3 text-sm ${isDark ? "border-primary/30 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}
               >
-                Your email app should open with a pre-filled draft. Send it and
-                I will reply soon.
+                {t("contact.successMessage")}
               </div>
             ) : null}
 
@@ -236,14 +246,14 @@ const ContactPage = () => {
               >
                 <div className="h-8 w-1 rounded-full bg-linear-to-b from-primary/30 to-primary/10" />
                 <h2 className={`text-xl font-medium ${titleText}`}>
-                  Direct Channels
+                  {t("contact.channelsTitle")}
                 </h2>
               </div>
 
               <div className="space-y-3">
-                {CONTACT_CHANNELS.map((channel) => (
+                {contactChannels.map((channel) => (
                   <a
-                    key={channel.title}
+                    key={channel.href}
                     href={channel.href}
                     target={
                       channel.href.startsWith("http") ? "_blank" : undefined
@@ -253,7 +263,7 @@ const ContactPage = () => {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    className={`block rounded-xl border p-3 transition hover:border-primary/40 ${isDark ? "border-white/10 bg-black/30" : "border-slate-200 bg-slate-50 hover:bg-slate-100"}`}
+                    className={`block rounded-xl border p-3 transition hover:border-primary/40 ${isDark ? "border-white/10 bg-white/5 hover:bg-white/10" : "border-slate-200 bg-slate-50 hover:bg-slate-100"}`}
                   >
                     <p
                       className={`text-sm font-medium ${isDark ? "text-primary" : "text-blue-700"}`}
@@ -266,7 +276,7 @@ const ContactPage = () => {
                     <p className={`mt-1 text-xs ${softText}`}>
                       {channel.description}
                       {channel.href.startsWith("http")
-                        ? " Opens in a new tab."
+                        ? t("common.opensNewTab")
                         : ""}
                     </p>
                   </a>
@@ -278,16 +288,15 @@ const ContactPage = () => {
 
             <div className={panelClasses}>
               <h2 className={`mb-3 text-xl font-medium ${titleText}`}>
-                Availability
+                {t("contact.availabilityTitle")}
               </h2>
               <p className={`text-sm ${mutedText}`}>
-                Open to freelance builds, long-term product work, and internship
-                opportunities in frontend and full-stack development.
+                {t("contact.availabilityBody")}
               </p>
               <div
                 className={`mt-4 inline-flex rounded-full border px-3 py-1 text-xs font-medium ${isDark ? "border-primary/40 bg-primary/10 text-primary" : "border-blue-200 bg-blue-50 text-blue-700"}`}
               >
-                Next slot: May 2026
+                {t("contact.nextSlot")}
               </div>
             </div>
           </aside>

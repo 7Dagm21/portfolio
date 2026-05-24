@@ -1,10 +1,11 @@
-import { Link } from "react-router";
-import { ArrowRight } from "lucide-react";
 import { useTheme } from "@/context/useTheme";
+import { useTranslation } from "@/i18n/useTranslation";
 import FadeIn from "@/animations/FadeIn";
+import GetInTouchButton from "@/components/ui/GetInTouchButton";
 
 const CalloutCard = () => {
   const { isDark } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <section
@@ -12,7 +13,6 @@ const CalloutCard = () => {
         isDark ? "bg-slate-950" : "bg-slate-50"
       }`}
     >
-      {/* Background glow */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className={`absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl ${
@@ -30,7 +30,6 @@ const CalloutCard = () => {
                 : "border-slate-200/70 bg-white shadow-slate-200/60 hover:border-primary/30 hover:shadow-primary/10"
             }`}
           >
-            {/* Left — Text */}
             <div className="flex flex-col justify-center gap-4 text-center lg:text-left">
               <div
                 className={`mx-auto h-2 w-2 rounded-full lg:mx-0 ${
@@ -42,34 +41,24 @@ const CalloutCard = () => {
                   isDark ? "text-white" : "text-slate-900"
                 }`}
               >
-                Ready to start your project?
+                {t("home.calloutTitle")}
               </h2>
               <p
                 className={`max-w-xl text-base leading-7 sm:text-lg ${
                   isDark ? "text-white/60" : "text-slate-600"
                 }`}
               >
-                Let&apos;s discuss how we can bring your ideas to life with
-                quality and speed.
+                {t("home.calloutBody")}
               </p>
             </div>
 
-            {/* Right — CTA */}
             <div className="flex items-center justify-center lg:justify-end">
-              <Link
-                to="/contact"
-                className={`btn inline-flex items-center gap-2 rounded-full border px-10 py-4 text-base font-medium ${
-                  isDark
-                    ? "border-white/20 text-white hover:bg-white/10"
-                    : "border-slate-300 text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                Get in Touch
-                <ArrowRight className="h-5 w-5" />
-              </Link>
+              <GetInTouchButton
+                variant="primary"
+                className="px-10 py-4 text-base"
+              />
             </div>
 
-            {/* Corner accent */}
             <div
               className={`pointer-events-none absolute -top-px left-12 h-px w-32 bg-linear-to-r from-transparent ${
                 isDark ? "via-blue-400/50 to-transparent" : "via-blue-500/40 to-transparent"
