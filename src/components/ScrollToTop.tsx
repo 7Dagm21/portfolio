@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 
 /** Jump to top on route change (instant — avoids smooth-scroll from prior position). */
+// eslint-disable-next-line react-refresh/only-export-components
 export function scrollToTop() {
   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 }
